@@ -77,6 +77,8 @@ input int             InpSlowEmaPeriod            = 50;
 
 input group "Session Filter - UTC"
 input bool            InpUseSessionFilter         = true;
+input int             StartHour                   = 7;
+input int             EndHour                     = 23;
 input int             InpLondonStartHourUTC       = 7;
 input int             InpLondonEndHourUTC         = 11;
 input int             InpNewYorkStartHourUTC      = 13;
@@ -697,14 +699,12 @@ bool IsSpreadAcceptable()
 //+------------------------------------------------------------------+
 bool IsInTradingSession()
 {
-   datetime now_gmt = TimeGMT();
+   datetime now_gmt = TradeServerTime();
    MqlDateTime dt;
    TimeToStruct(now_gmt, dt);
 
    int minutes = dt.hour * 60 + dt.min;
-   bool london = IsMinuteInWindow(minutes, InpLondonStartHourUTC * 60, InpLondonEndHourUTC * 60);
-   bool new_york = IsMinuteInWindow(minutes, InpNewYorkStartHourUTC * 60, InpNewYorkEndHourUTC * 60);
-   return london || new_york;
+   return IsMinuteInWindow(minutes, StartHour * 60, EndHour * 60);
 }
 
 //+------------------------------------------------------------------+
