@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+bot.log*
+trades_journal.csv
+.pytest_cache/
