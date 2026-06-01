@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_DOWN
+from decimal import Decimal, ROUND_DOWN, ROUND_UP
 from typing import Optional
 
 from config import BotConfig
@@ -68,9 +68,13 @@ class RiskManager:
                 ),
             )
 
-        entry = self._round_price(signal.entry, rules.tick_size)
-        stop_loss = self._round_price(signal.stop_loss, rules.tick_size)
-        take_profit = self._round_price(signal.take_profit, rules.tick_size)
+        entry = self._round_price_down(signal.entry, rules.tick_size)
+        if signal.direction == "long":
+            stop_loss = self._round_price_down(signal.stop_loss, rules.tick_size)
+            take_profit = self._round_price_down(signal.take_profit, rules.tick_size)
+        else:
+            stop_loss = self._round_price_up(signal.stop_loss, rules.tick_size)
+            take_profit = self._round_price_up(signal.take_profit, rules.tick_size)
 
         risk_distance = abs(entry - stop_loss)
         profit_distance = abs(take_profit - entry)
@@ -113,12 +117,23 @@ class RiskManager:
         return float(rounded)
 
     @staticmethod
-    def _round_price(value: float, tick_size: float) -> float:
+    def _round_price_down(value: float, tick_size: float) -> float:
         if tick_size <= 0:
             return value
         tick_decimal = Decimal(str(tick_size))
         value_decimal = Decimal(str(value))
         rounded = (value_decimal / tick_decimal).to_integral_value(
             rounding=ROUND_DOWN
+        ) * tick_decimal
+        return float(rounded)
+
+    @staticmethod
+    def _round_price_up(value: float, tick_size: float) -> float:
+        if tick_size <= 0:
+            return value
+        tick_decimal = Decimal(str(tick_size))
+        value_decimal = Decimal(str(value))
+        rounded = (value_decimal / tick_decimal).to_integral_value(
+            rounding=ROUND_UP
         ) * tick_decimal
         return float(rounded)

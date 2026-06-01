@@ -150,6 +150,10 @@ requires keys in `.env`.
 python main.py --validate-connection
 ```
 
+If Bybit returns HTTP 403 with a message about IP rate limits or a restricted
+region, run validation from an allowed local/VPS IP and consider adding that IP
+to the API key allowlist.
+
 ## Run one paper evaluation
 
 ```bash
@@ -226,6 +230,7 @@ ENABLE_SHORT_TRADES=true
 
 - Live API validation cannot be performed unless real testnet credentials are
   present in local environment variables.
+- Bybit may block some hosted cloud IPs or restricted regions with HTTP 403.
 - Exchange downtime, internet disconnections, API changes, and liquidation
   events can still cause missed exits or slippage.
 - The included strategy is a production-quality starting point, not a guarantee
