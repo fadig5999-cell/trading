@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Complete Interactive Practice Wheel 3D Model</title>
+    <style>
+:root {
+  color-scheme: dark;
+  --panel: rgba(14, 19, 29, 0.82);
+  --panel-strong: rgba(18, 24, 36, 0.94);
+  --line: rgba(255, 255, 255, 0.14);
+  --text: #eef3ff;
+  --muted: #aab5c8;
+  --accent: #7fd4ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(74, 117, 163, 0.28), transparent 34rem),
+    radial-gradient(circle at 80% 10%, rgba(83, 176, 196, 0.2), transparent 30rem),
+    linear-gradient(135deg, #06080d 0%, #111827 52%, #070a10 100%);
+  color: var(--text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+.viewer-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
+  height: 100vh;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.hero-panel {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  background: var(--panel);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+
+.summary {
+  max-width: 54rem;
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.spec-card {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-content: center;
+  gap: 0.35rem 0.85rem;
+  min-width: 13rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.spec-card span {
+  color: var(--muted);
+}
+
+.spec-card strong {
+  color: #fff;
+  text-align: right;
+}
+
+.viewport-wrap {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 50% 38%, rgba(141, 194, 255, 0.08), transparent 28rem),
+    #070b12;
+  background-size: 42px 42px, 42px 42px, auto, auto;
+  box-shadow: inset 0 0 6rem rgba(0, 0, 0, 0.44);
+}
+
+#modelCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  outline: none;
+  touch-action: none;
+}
+
+#modelCanvas:active {
+  cursor: grabbing;
+}
+
+.controls {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: min(52rem, calc(100% - 2rem));
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel-strong);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.28);
+}
+
+.controls button,
+.controls select {
+  min-height: 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 0.42rem 0.7rem;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.controls button:hover,
+.controls select:hover {
+  border-color: rgba(127, 212, 255, 0.65);
+}
+
+.controls button[aria-pressed="true"] {
+  background: rgba(127, 212, 255, 0.22);
+  border-color: rgba(127, 212, 255, 0.72);
+}
+
+.controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+}
+
+.navigation-help {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: 35rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: var(--panel-strong);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 8.5rem;
+  padding: 0.46rem 0.58rem;
+  border: 1px solid rgba(127, 212, 255, 0.5);
+  border-radius: 0.65rem;
+  background: rgba(5, 9, 15, 0.78);
+  color: #e8f7ff;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  text-shadow: 0 1px 1px #000;
+  box-shadow: 0 0.7rem 1.7rem rgba(0, 0, 0, 0.28);
+}
+
+.hotspot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 1.8rem;
+  background: linear-gradient(rgba(127, 212, 255, 0.9), transparent);
+}
+
+.hotspot strong {
+  display: block;
+  color: #fff;
+  font-size: 0.83rem;
+}
+
+@media (max-width: 760px) {
+  body {
+    overflow: auto;
+  }
+
+  .viewer-shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-panel {
+    flex-direction: column;
+  }
+
+  .viewport-wrap {
+    min-height: 72vh;
+  }
+
+  .navigation-help {
+    left: 1rem;
+    right: 1rem;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <main class="viewer-shell">
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Procedural WebGL model</p>
+          <h1>Practice Wheel</h1>
+          <p class="summary">
+            High-detail interactive reconstruction of the referenced
+            18-spoke wheel drawing with beveled rims, recessed pockets,
+            raised hub detail, metallic shading, and inspection controls.
+          </p>
+        </div>
+        <div class="spec-card" aria-label="Model dimensions">
+          <span>OD</span><strong>6.60 in</strong>
+          <span>Spokes</span><strong>18 @ 20&deg;</strong>
+          <span>Render</span><strong>WebGL 2</strong>
+        </div>
+      </section>
+
+      <section class="viewport-wrap">
+        <canvas id="modelCanvas" aria-label="Interactive 3D model viewport"></canvas>
+        <div id="labels" class="labels" aria-hidden="true"></div>
+        <div class="controls" aria-label="Viewer controls">
+          <button id="resetView" type="button">Reset view</button>
+          <button id="toggleSpin" type="button" aria-pressed="false">Auto rotate</button>
+          <button id="toggleLabels" type="button" aria-pressed="true">Labels</button>
+          <button id="toggleWire" type="button" aria-pressed="false">Wireframe</button>
+          <button id="downloadObj" type="button">Download OBJ</button>
+          <label>
+            Material
+            <select id="materialSelect">
+              <option value="gunmetal" selected>dark satin metal</option>
+              <option value="aluminum">brushed aluminum</option>
+              <option value="blueprint">blueprint clay</option>
+            </select>
+          </label>
+        </div>
+        <div class="navigation-help">
+          <strong>Mouse:</strong> drag to rotate, shift/right-drag to pan, wheel to zoom.
+          Double-click resets the camera.
+        </div>
+      </section>
+    </main>
+
+    <script>
+(function attachModelFactory(global) {
+  "use strict";
+
+  const TAU = Math.PI * 2;
+  const DEFAULT_SEGMENTS = 288;
+
+  const MATERIALS = {
+    body: { color: [0.33, 0.36, 0.41], roughness: 0.34, metallic: 0.86 },
+    bevel: { color: [0.46, 0.49, 0.55], roughness: 0.27, metallic: 0.9 },
+    pocket: { color: [0.18, 0.2, 0.24], roughness: 0.58, metallic: 0.72 },
+    hub: { color: [0.41, 0.43, 0.48], roughness: 0.3, metallic: 0.9 },
+    bore: { color: [0.035, 0.04, 0.05], roughness: 0.72, metallic: 0.2 }
+  };
+
+  function createPracticeWheelModel() {
+    const dimensions = {
+      units: "inches",
+      outerDiameter: 6.6,
+      outerRadius: 3.3,
+      hubOuterDiameter: 1.7,
+      boreDiameter: 0.52,
+      ribCount: 18,
+      pitchDegrees: 20,
+      ribTwistDegrees: 5,
+      nominalThickness: 0.54
+    };
+
+    const meshes = [];
+    const push = (mesh) => meshes.push(mesh);
+
+    push(createLatheMesh(
+      "recessed annular pocket floor",
+      [
+        [0.86, -0.12],
+        [2.86, -0.12],
+        [2.93, -0.17],
+        [2.93, -0.24],
+        [0.86, -0.24],
+        [0.79, -0.18],
+        [0.79, -0.14],
+        [0.86, -0.12]
+      ],
+      DEFAULT_SEGMENTS,
+      MATERIALS.pocket
+    ));
+
+    push(createLatheMesh(
+      "rolled outer rim with chamfers",
+      [
+        [2.72, 0.035],
+        [2.86, 0.11],
+        [3.15, 0.14],
+        [3.28, 0.075],
+        [3.3, -0.06],
+        [3.25, -0.19],
+        [3.08, -0.27],
+        [2.86, -0.25],
+        [2.74, -0.16],
+        [2.72, 0.035]
+      ],
+      DEFAULT_SEGMENTS,
+      MATERIALS.bevel
+    ));
+
+    push(createLatheMesh(
+      "raised central hub and bore bevel",
+      [
+        [0.26, 0.22],
+        [0.38, 0.29],
+        [0.66, 0.3],
+        [0.82, 0.22],
+        [0.9, 0.08],
+        [0.87, -0.16],
+        [0.72, -0.28],
+        [0.42, -0.31],
+        [0.27, -0.25],
+        [0.26, 0.22]
+      ],
+      DEFAULT_SEGMENTS,
+      MATERIALS.hub
+    ));
+
+    push(createLatheMesh(
+      "dark machined center bore",
+      [
+        [0.01, 0.18],
+        [0.24, 0.18],
+        [0.27, 0.14],
+        [0.27, -0.28],
+        [0.24, -0.33],
+        [0.01, -0.33],
+        [0.01, 0.18]
+      ],
+      DEFAULT_SEGMENTS,
+      MATERIALS.bore
+    ));
+
+    push(createLatheMesh(
+      "front concentric boss detail",
+      [
+        [0.31, 0.315],
+        [0.48, 0.345],
+        [0.62, 0.335],
+        [0.72, 0.29],
+        [0.68, 0.245],
+        [0.36, 0.242],
+        [0.31, 0.315]
+      ],
+      DEFAULT_SEGMENTS,
+      MATERIALS.bevel
+    ));
+
+    push(createLatheMesh(
+      "fine inner fillet ring",
+      [
+        [1.01, 0.035],
+        [1.13, 0.072],
+        [1.21, 0.04],
+        [1.19, -0.055],
+        [1.04, -0.065],
+        [1.01, 0.035]
+      ],
+      DEFAULT_SEGMENTS,
+      MATERIALS.bevel
+    ));
+
+    const ribCount = dimensions.ribCount;
+    for (let index = 0; index < ribCount; index += 1) {
+      const center = (index / ribCount) * TAU;
+      push(createCurvedRibMesh({
+        name: `curved raised rib ${String(index + 1).padStart(2, "0")}`,
+        centerAngle: center,
+        innerRadius: 1.04,
+        outerRadius: 2.88,
+        innerHalfAngle: radians(5.15),
+        outerHalfAngle: radians(3.25),
+        twistAngle: radians(5),
+        zTop: 0.135,
+        zBottom: -0.112,
+        radialSteps: 22,
+        material: MATERIALS.body
+      }));
+    }
+
+    for (let index = 0; index < ribCount; index += 1) {
+      const center = ((index + 0.5) / ribCount) * TAU;
+      push(createCurvedRibMesh({
+        name: `subtle recessed pocket highlight ${String(index + 1).padStart(2, "0")}`,
+        centerAngle: center,
+        innerRadius: 1.18,
+        outerRadius: 2.66,
+        innerHalfAngle: radians(2.0),
+        outerHalfAngle: radians(1.55),
+        twistAngle: radians(3.2),
+        zTop: -0.095,
+        zBottom: -0.112,
+        radialSteps: 14,
+        material: { color: [0.24, 0.27, 0.32], roughness: 0.5, metallic: 0.76 }
+      }));
+    }
+
+    const hotspots = [
+      {
+        label: "Outer rim",
+        value: "OD 6.60 in, rounded lip",
+        position: [3.31, 0.05, 0.16]
+      },
+      {
+        label: "18 raised ribs",
+        value: "20 deg pitch with 5 deg sweep",
+        position: [1.98, 1.32, 0.2]
+      },
+      {
+        label: "Machined hub",
+        value: "raised boss, bore and fillets",
+        position: [0.48, -0.2, 0.38]
+      },
+      {
+        label: "Recessed pockets",
+        value: "lower web visible between ribs",
+        position: [-1.75, -1.08, -0.08]
+      }
+    ];
+
+    return { meshes, dimensions, hotspots };
+  }
+
+  function createLatheMesh(name, profile, segments, material) {
+    const positions = [];
+    const indices = [];
+
+    for (let segment = 0; segment <= segments; segment += 1) {
+      const angle = (segment / segments) * TAU;
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+
+      for (const point of profile) {
+        const radius = point[0];
+        const z = point[1];
+        positions.push(radius * cos, radius * sin, z);
+      }
+    }
+
+    const row = profile.length;
+    for (let segment = 0; segment < segments; segment += 1) {
+      for (let i = 0; i < row - 1; i += 1) {
+        const a = segment * row + i;
+        const b = (segment + 1) * row + i;
+        const c = (segment + 1) * row + i + 1;
+        const d = segment * row + i + 1;
+        indices.push(a, c, b, a, d, c);
+      }
+    }
+
+    return finalizeMesh(name, positions, indices, material);
+  }
+
+  function createCurvedRibMesh(options) {
+    const {
+      name,
+      centerAngle,
+      innerRadius,
+      outerRadius,
+      innerHalfAngle,
+      outerHalfAngle,
+      twistAngle,
+      zTop,
+      zBottom,
+      radialSteps,
+      material
+    } = options;
+
+    const positions = [];
+    const indices = [];
+    const topLeft = [];
+    const topRight = [];
+    const bottomLeft = [];
+    const bottomRight = [];
+
+    for (let step = 0; step <= radialSteps; step += 1) {
+      const t = step / radialSteps;
+      const radius = lerp(innerRadius, outerRadius, smoothstep(t));
+      const center = centerAngle + (t - 0.5) * twistAngle;
+      const half = lerp(innerHalfAngle, outerHalfAngle, t);
+      const crown = Math.sin(t * Math.PI) * 0.038;
+      const topZ = zTop + crown;
+      const bottomZ = zBottom - Math.sin(t * Math.PI) * 0.012;
+
+      topLeft.push(pushPolar(positions, radius, center - half, topZ));
+      topRight.push(pushPolar(positions, radius, center + half, topZ));
+      bottomLeft.push(pushPolar(positions, radius, center - half * 1.08, bottomZ));
+      bottomRight.push(pushPolar(positions, radius, center + half * 1.08, bottomZ));
+    }
+
+    for (let step = 0; step < radialSteps; step += 1) {
+      quad(indices, topLeft[step], topLeft[step + 1], topRight[step + 1], topRight[step]);
+      quad(indices, bottomRight[step], bottomRight[step + 1], bottomLeft[step + 1], bottomLeft[step]);
+      quad(indices, topRight[step], topRight[step + 1], bottomRight[step + 1], bottomRight[step]);
+      quad(indices, bottomLeft[step], bottomLeft[step + 1], topLeft[step + 1], topLeft[step]);
+    }
+
+    quad(indices, topRight[0], bottomRight[0], bottomLeft[0], topLeft[0]);
+    quad(indices, topLeft[radialSteps], bottomLeft[radialSteps], bottomRight[radialSteps], topRight[radialSteps]);
+
+    return finalizeMesh(name, positions, indices, material);
+  }
+
+  function finalizeMesh(name, positions, indices, material) {
+    const normals = computeNormals(positions, indices);
+    return {
+      name,
+      positions: new Float32Array(positions),
+      normals: new Float32Array(normals),
+      indices: new Uint32Array(indices),
+      material,
+      bounds: computeBounds(positions)
+    };
+  }
+
+  function pushPolar(positions, radius, angle, z) {
+    const index = positions.length / 3;
+    positions.push(radius * Math.cos(angle), radius * Math.sin(angle), z);
+    return index;
+  }
+
+  function quad(indices, a, b, c, d) {
+    indices.push(a, b, c, a, c, d);
+  }
+
+  function computeNormals(positions, indices) {
+    const normals = new Array(positions.length).fill(0);
+    for (let i = 0; i < indices.length; i += 3) {
+      const ia = indices[i] * 3;
+      const ib = indices[i + 1] * 3;
+      const ic = indices[i + 2] * 3;
+
+      const abx = positions[ib] - positions[ia];
+      const aby = positions[ib + 1] - positions[ia + 1];
+      const abz = positions[ib + 2] - positions[ia + 2];
+      const acx = positions[ic] - positions[ia];
+      const acy = positions[ic + 1] - positions[ia + 1];
+      const acz = positions[ic + 2] - positions[ia + 2];
+
+      const nx = aby * acz - abz * acy;
+      const ny = abz * acx - abx * acz;
+      const nz = abx * acy - aby * acx;
+
+      normals[ia] += nx;
+      normals[ia + 1] += ny;
+      normals[ia + 2] += nz;
+      normals[ib] += nx;
+      normals[ib + 1] += ny;
+      normals[ib + 2] += nz;
+      normals[ic] += nx;
+      normals[ic + 1] += ny;
+      normals[ic + 2] += nz;
+    }
+
+    for (let i = 0; i < normals.length; i += 3) {
+      const length = Math.hypot(normals[i], normals[i + 1], normals[i + 2]) || 1;
+      normals[i] /= length;
+      normals[i + 1] /= length;
+      normals[i + 2] /= length;
+    }
+
+    return normals;
+  }
+
+  function computeBounds(positions) {
+    const min = [Infinity, Infinity, Infinity];
+    const max = [-Infinity, -Infinity, -Infinity];
+
+    for (let i = 0; i < positions.length; i += 3) {
+      min[0] = Math.min(min[0], positions[i]);
+      min[1] = Math.min(min[1], positions[i + 1]);
+      min[2] = Math.min(min[2], positions[i + 2]);
+      max[0] = Math.max(max[0], positions[i]);
+      max[1] = Math.max(max[1], positions[i + 1]);
+      max[2] = Math.max(max[2], positions[i + 2]);
+    }
+
+    return { min, max };
+  }
+
+  function exportObj(model) {
+    const lines = [
+      "# Practice Wheel procedural model",
+      "# Units: inches",
+      `# Outer diameter: ${model.dimensions.outerDiameter}`,
+      `# Rib count: ${model.dimensions.ribCount}`,
+      ""
+    ];
+    let vertexOffset = 1;
+
+    for (const mesh of model.meshes) {
+      lines.push(`o ${mesh.name.replace(/\s+/g, "_")}`);
+      for (let i = 0; i < mesh.positions.length; i += 3) {
+        lines.push(`v ${format(mesh.positions[i])} ${format(mesh.positions[i + 1])} ${format(mesh.positions[i + 2])}`);
+      }
+      for (let i = 0; i < mesh.normals.length; i += 3) {
+        lines.push(`vn ${format(mesh.normals[i])} ${format(mesh.normals[i + 1])} ${format(mesh.normals[i + 2])}`);
+      }
+      for (let i = 0; i < mesh.indices.length; i += 3) {
+        const a = mesh.indices[i] + vertexOffset;
+        const b = mesh.indices[i + 1] + vertexOffset;
+        const c = mesh.indices[i + 2] + vertexOffset;
+        lines.push(`f ${a}//${a} ${b}//${b} ${c}//${c}`);
+      }
+      vertexOffset += mesh.positions.length / 3;
+      lines.push("");
+    }
+
+    return lines.join("\n");
+  }
+
+  function smoothstep(value) {
+    return value * value * (3 - 2 * value);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function radians(degrees) {
+    return (degrees * Math.PI) / 180;
+  }
+
+  function format(value) {
+    return Number(value).toFixed(6);
+  }
+
+  global.PracticeWheelModel = {
+    create: createPracticeWheelModel,
+    exportObj
+  };
+})(window);
+
+    </script>
+    <script>
+const fillVertexShader = `#version 300 es
+precision highp float;
+
+in vec3 aPosition;
+in vec3 aNormal;
+
+uniform mat4 uProjection;
+uniform mat4 uView;
+uniform mat4 uModel;
+uniform mat3 uNormalMatrix;
+
+out vec3 vWorld;
+out vec3 vNormal;
+
+void main() {
+  vec4 world = uModel * vec4(aPosition, 1.0);
+  vWorld = world.xyz;
+  vNormal = normalize(uNormalMatrix * aNormal);
+  gl_Position = uProjection * uView * world;
+}
+`;
+
+const fillFragmentShader = `#version 300 es
+precision highp float;
+
+in vec3 vWorld;
+in vec3 vNormal;
+
+uniform vec3 uBaseColor;
+uniform float uRoughness;
+uniform float uMetallic;
+uniform vec3 uCamera;
+
+out vec4 fragColor;
+
+void main() {
+  vec3 normal = normalize(vNormal);
+  vec3 viewDir = normalize(uCamera - vWorld);
+  vec3 lightA = normalize(vec3(-0.45, -0.35, 0.82));
+  vec3 lightB = normalize(vec3(0.7, 0.45, 0.35));
+  float diffuseA = max(dot(normal, lightA), 0.0);
+  float diffuseB = max(dot(normal, lightB), 0.0);
+  vec3 halfA = normalize(lightA + viewDir);
+  vec3 halfB = normalize(lightB + viewDir);
+  float shininess = mix(92.0, 18.0, clamp(uRoughness, 0.0, 1.0));
+  float specular = pow(max(dot(normal, halfA), 0.0), shininess) * 0.55;
+  specular += pow(max(dot(normal, halfB), 0.0), shininess * 0.7) * 0.22;
+  float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 3.0);
+  vec3 ambient = uBaseColor * vec3(0.22, 0.25, 0.3);
+  vec3 diffuse = uBaseColor * (diffuseA * 0.78 + diffuseB * 0.22);
+  vec3 metalSpec = mix(vec3(1.0), uBaseColor * 1.45, uMetallic);
+  vec3 color = ambient + diffuse + metalSpec * specular + vec3(0.45, 0.72, 0.92) * fresnel * 0.18;
+  color = color / (color + vec3(1.0));
+  color = pow(color, vec3(0.78));
+  fragColor = vec4(color, 1.0);
+}
+`;
+
+const lineVertexShader = `#version 300 es
+precision highp float;
+
+in vec3 aPosition;
+
+uniform mat4 uProjection;
+uniform mat4 uView;
+uniform mat4 uModel;
+
+void main() {
+  gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
+}
+`;
+
+const lineFragmentShader = `#version 300 es
+precision highp float;
+
+uniform vec4 uColor;
+
+out vec4 fragColor;
+
+void main() {
+  fragColor = uColor;
+}
+`;
+
+(function startViewer() {
+  "use strict";
+
+  const canvas = document.getElementById("modelCanvas");
+  const labelsLayer = document.getElementById("labels");
+  const gl = canvas.getContext("webgl2", {
+    antialias: true,
+    alpha: true,
+    powerPreference: "high-performance"
+  });
+
+  if (!gl) {
+    labelsLayer.innerHTML = '<div class="hotspot" style="left:50%;top:50%">WebGL 2 is required for this viewer.</div>';
+    return;
+  }
+
+  const model = window.PracticeWheelModel.create();
+  const fillProgram = createProgram(gl, fillVertexShader, fillFragmentShader);
+  const lineProgram = createProgram(gl, lineVertexShader, lineFragmentShader);
+  const fillLocations = getFillLocations(gl, fillProgram);
+  const lineLocations = getLineLocations(gl, lineProgram);
+  const renderMeshes = model.meshes.map((mesh) => uploadMesh(gl, mesh, fillLocations, lineLocations));
+  const hotspotElements = createHotspots(model.hotspots);
+
+  const state = {
+    yaw: -0.72,
+    pitch: 0.58,
+    distance: 8.6,
+    target: [0, 0, 0],
+    spin: false,
+    spinAngle: 0,
+    showLabels: true,
+    showWire: false,
+    materialMode: "gunmetal",
+    dragging: false,
+    dragMode: "rotate",
+    pointer: [0, 0]
+  };
+
+  gl.enable(gl.DEPTH_TEST);
+  gl.depthFunc(gl.LEQUAL);
+  gl.disable(gl.CULL_FACE);
+
+  window.addEventListener("resize", resizeCanvas);
+  canvas.addEventListener("pointerdown", onPointerDown);
+  canvas.addEventListener("pointermove", onPointerMove);
+  canvas.addEventListener("pointerup", onPointerUp);
+  canvas.addEventListener("pointercancel", onPointerUp);
+  canvas.addEventListener("wheel", onWheel, { passive: false });
+  canvas.addEventListener("dblclick", resetView);
+  canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+
+  document.getElementById("resetView").addEventListener("click", resetView);
+  document.getElementById("toggleSpin").addEventListener("click", (event) => {
+    state.spin = !state.spin;
+    event.currentTarget.setAttribute("aria-pressed", String(state.spin));
+  });
+  document.getElementById("toggleLabels").addEventListener("click", (event) => {
+    state.showLabels = !state.showLabels;
+    labelsLayer.style.display = state.showLabels ? "block" : "none";
+    event.currentTarget.setAttribute("aria-pressed", String(state.showLabels));
+  });
+  document.getElementById("toggleWire").addEventListener("click", (event) => {
+    state.showWire = !state.showWire;
+    event.currentTarget.setAttribute("aria-pressed", String(state.showWire));
+  });
+  document.getElementById("materialSelect").addEventListener("change", (event) => {
+    state.materialMode = event.target.value;
+  });
+  document.getElementById("downloadObj").addEventListener("click", downloadObj);
+
+  resizeCanvas();
+  requestAnimationFrame(render);
+
+  function render(time) {
+    if (state.spin) {
+      state.spinAngle = (time * 0.00023) % (Math.PI * 2);
+    }
+
+    const camera = computeCamera();
+    const aspect = canvas.width / Math.max(canvas.height, 1);
+    const projection = mat4Perspective(radians(36), aspect, 0.05, 100);
+    const view = mat4LookAt(camera.eye, state.target, [0, 0, 1]);
+    const modelMatrix = mat4RotateZ(state.spinAngle);
+    const normalMatrix = mat3FromMat4(modelMatrix);
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    gl.useProgram(fillProgram);
+    gl.uniformMatrix4fv(fillLocations.uProjection, false, projection);
+    gl.uniformMatrix4fv(fillLocations.uView, false, view);
+    gl.uniformMatrix4fv(fillLocations.uModel, false, modelMatrix);
+    gl.uniformMatrix3fv(fillLocations.uNormalMatrix, false, normalMatrix);
+    gl.uniform3fv(fillLocations.uCamera, camera.eye);
+
+    for (const renderMesh of renderMeshes) {
+      const material = resolveMaterial(renderMesh.source.material, state.materialMode);
+      gl.uniform3fv(fillLocations.uBaseColor, material.color);
+      gl.uniform1f(fillLocations.uRoughness, material.roughness);
+      gl.uniform1f(fillLocations.uMetallic, material.metallic);
+      gl.bindVertexArray(renderMesh.fillVao);
+      gl.drawElements(gl.TRIANGLES, renderMesh.indexCount, gl.UNSIGNED_INT, 0);
+    }
+
+    if (state.showWire) {
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.useProgram(lineProgram);
+      gl.uniformMatrix4fv(lineLocations.uProjection, false, projection);
+      gl.uniformMatrix4fv(lineLocations.uView, false, view);
+      gl.uniformMatrix4fv(lineLocations.uModel, false, modelMatrix);
+      gl.uniform4f(lineLocations.uColor, 0.58, 0.86, 1.0, 0.18);
+
+      for (const renderMesh of renderMeshes) {
+        gl.bindVertexArray(renderMesh.lineVao);
+        gl.drawElements(gl.LINES, renderMesh.edgeCount, gl.UNSIGNED_INT, 0);
+      }
+      gl.disable(gl.BLEND);
+    }
+
+    updateHotspots(projection, view, modelMatrix);
+    requestAnimationFrame(render);
+  }
+
+  function uploadMesh(glContext, mesh, fill, line) {
+    const positionBuffer = glContext.createBuffer();
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, positionBuffer);
+    glContext.bufferData(glContext.ARRAY_BUFFER, mesh.positions, glContext.STATIC_DRAW);
+
+    const normalBuffer = glContext.createBuffer();
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, normalBuffer);
+    glContext.bufferData(glContext.ARRAY_BUFFER, mesh.normals, glContext.STATIC_DRAW);
+
+    const indexBuffer = glContext.createBuffer();
+    glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glContext.bufferData(glContext.ELEMENT_ARRAY_BUFFER, mesh.indices, glContext.STATIC_DRAW);
+
+    const edges = buildEdgeIndices(mesh.indices);
+    const edgeBuffer = glContext.createBuffer();
+    glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, edgeBuffer);
+    glContext.bufferData(glContext.ELEMENT_ARRAY_BUFFER, edges, glContext.STATIC_DRAW);
+
+    const fillVao = glContext.createVertexArray();
+    glContext.bindVertexArray(fillVao);
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, positionBuffer);
+    glContext.enableVertexAttribArray(fill.aPosition);
+    glContext.vertexAttribPointer(fill.aPosition, 3, glContext.FLOAT, false, 0, 0);
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, normalBuffer);
+    glContext.enableVertexAttribArray(fill.aNormal);
+    glContext.vertexAttribPointer(fill.aNormal, 3, glContext.FLOAT, false, 0, 0);
+    glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+    const lineVao = glContext.createVertexArray();
+    glContext.bindVertexArray(lineVao);
+    glContext.bindBuffer(glContext.ARRAY_BUFFER, positionBuffer);
+    glContext.enableVertexAttribArray(line.aPosition);
+    glContext.vertexAttribPointer(line.aPosition, 3, glContext.FLOAT, false, 0, 0);
+    glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, edgeBuffer);
+
+    glContext.bindVertexArray(null);
+
+    return {
+      source: mesh,
+      fillVao,
+      lineVao,
+      indexCount: mesh.indices.length,
+      edgeCount: edges.length
+    };
+  }
+
+  function buildEdgeIndices(indices) {
+    const edgeMap = new Map();
+    for (let i = 0; i < indices.length; i += 3) {
+      addEdge(edgeMap, indices[i], indices[i + 1]);
+      addEdge(edgeMap, indices[i + 1], indices[i + 2]);
+      addEdge(edgeMap, indices[i + 2], indices[i]);
+    }
+    return new Uint32Array(Array.from(edgeMap.values()).flat());
+  }
+
+  function addEdge(map, a, b) {
+    const low = Math.min(a, b);
+    const high = Math.max(a, b);
+    const key = `${low}:${high}`;
+    if (!map.has(key)) {
+      map.set(key, [low, high]);
+    }
+  }
+
+  function resolveMaterial(source, mode) {
+    if (mode === "aluminum") {
+      return {
+        color: source.color.map((channel) => Math.min(1, channel * 1.45 + 0.16)),
+        roughness: Math.max(0.2, source.roughness * 0.72),
+        metallic: 0.95
+      };
+    }
+
+    if (mode === "blueprint") {
+      return {
+        color: [
+          0.18 + source.color[0] * 0.18,
+          0.36 + source.color[1] * 0.22,
+          0.62 + source.color[2] * 0.24
+        ],
+        roughness: 0.66,
+        metallic: 0.15
+      };
+    }
+
+    return source;
+  }
+
+  function createHotspots(hotspots) {
+    labelsLayer.textContent = "";
+    return hotspots.map((hotspot) => {
+      const element = document.createElement("div");
+      element.className = "hotspot";
+      element.innerHTML = `<strong>${escapeHtml(hotspot.label)}</strong>${escapeHtml(hotspot.value)}`;
+      labelsLayer.appendChild(element);
+      return { ...hotspot, element };
+    });
+  }
+
+  function updateHotspots(projection, view, modelMatrix) {
+    if (!state.showLabels) {
+      return;
+    }
+
+    const pv = mat4Multiply(projection, view);
+    const pvm = mat4Multiply(pv, modelMatrix);
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    for (const hotspot of hotspotElements) {
+      const clip = transformPoint(pvm, hotspot.position);
+      const visible = clip[3] > 0 && clip[2] > -clip[3] && clip[2] < clip[3];
+      if (!visible) {
+        hotspot.element.style.opacity = "0";
+        continue;
+      }
+
+      const ndcX = clip[0] / clip[3];
+      const ndcY = clip[1] / clip[3];
+      hotspot.element.style.opacity = "1";
+      hotspot.element.style.left = `${((ndcX + 1) * 0.5) * width}px`;
+      hotspot.element.style.top = `${((1 - ndcY) * 0.5) * height}px`;
+    }
+  }
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    const width = Math.max(1, Math.floor(canvas.clientWidth * dpr));
+    const height = Math.max(1, Math.floor(canvas.clientHeight * dpr));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+  }
+
+  function onPointerDown(event) {
+    state.dragging = true;
+    state.dragMode = event.button === 2 || event.shiftKey ? "pan" : "rotate";
+    state.pointer = [event.clientX, event.clientY];
+    canvas.setPointerCapture(event.pointerId);
+  }
+
+  function onPointerMove(event) {
+    if (!state.dragging) {
+      return;
+    }
+
+    const dx = event.clientX - state.pointer[0];
+    const dy = event.clientY - state.pointer[1];
+    state.pointer = [event.clientX, event.clientY];
+
+    if (state.dragMode === "pan") {
+      const camera = computeCamera();
+      const scale = state.distance / Math.max(canvas.clientHeight, 1) * 1.65;
+      state.target[0] += (-camera.right[0] * dx + camera.up[0] * dy) * scale;
+      state.target[1] += (-camera.right[1] * dx + camera.up[1] * dy) * scale;
+      state.target[2] += (-camera.right[2] * dx + camera.up[2] * dy) * scale;
+    } else {
+      state.yaw -= dx * 0.008;
+      state.pitch = clamp(state.pitch - dy * 0.008, -1.34, 1.34);
+    }
+  }
+
+  function onPointerUp(event) {
+    state.dragging = false;
+    if (canvas.hasPointerCapture(event.pointerId)) {
+      canvas.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  function onWheel(event) {
+    event.preventDefault();
+    const zoom = Math.exp(event.deltaY * 0.0012);
+    state.distance = clamp(state.distance * zoom, 3.1, 24);
+  }
+
+  function resetView() {
+    state.yaw = -0.72;
+    state.pitch = 0.58;
+    state.distance = 8.6;
+    state.target = [0, 0, 0];
+    state.spinAngle = 0;
+  }
+
+  function computeCamera() {
+    const cp = Math.cos(state.pitch);
+    const eye = [
+      state.target[0] + state.distance * cp * Math.sin(state.yaw),
+      state.target[1] - state.distance * cp * Math.cos(state.yaw),
+      state.target[2] + state.distance * Math.sin(state.pitch)
+    ];
+    const forward = normalize([
+      state.target[0] - eye[0],
+      state.target[1] - eye[1],
+      state.target[2] - eye[2]
+    ]);
+    const right = normalize(cross(forward, [0, 0, 1]));
+    const up = normalize(cross(right, forward));
+    return { eye, forward, right, up };
+  }
+
+  function downloadObj() {
+    const blob = new Blob([window.PracticeWheelModel.exportObj(model)], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "practice-wheel-high-detail.obj";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function createProgram(glContext, vertexSource, fragmentSource) {
+    const vertex = compileShader(glContext, glContext.VERTEX_SHADER, vertexSource);
+    const fragment = compileShader(glContext, glContext.FRAGMENT_SHADER, fragmentSource);
+    const program = glContext.createProgram();
+    glContext.attachShader(program, vertex);
+    glContext.attachShader(program, fragment);
+    glContext.linkProgram(program);
+    if (!glContext.getProgramParameter(program, glContext.LINK_STATUS)) {
+      throw new Error(glContext.getProgramInfoLog(program));
+    }
+    return program;
+  }
+
+  function compileShader(glContext, type, source) {
+    const shader = glContext.createShader(type);
+    glContext.shaderSource(shader, source);
+    glContext.compileShader(shader);
+    if (!glContext.getShaderParameter(shader, glContext.COMPILE_STATUS)) {
+      throw new Error(glContext.getShaderInfoLog(shader));
+    }
+    return shader;
+  }
+
+  function getFillLocations(glContext, program) {
+    return {
+      aPosition: glContext.getAttribLocation(program, "aPosition"),
+      aNormal: glContext.getAttribLocation(program, "aNormal"),
+      uProjection: glContext.getUniformLocation(program, "uProjection"),
+      uView: glContext.getUniformLocation(program, "uView"),
+      uModel: glContext.getUniformLocation(program, "uModel"),
+      uNormalMatrix: glContext.getUniformLocation(program, "uNormalMatrix"),
+      uBaseColor: glContext.getUniformLocation(program, "uBaseColor"),
+      uRoughness: glContext.getUniformLocation(program, "uRoughness"),
+      uMetallic: glContext.getUniformLocation(program, "uMetallic"),
+      uCamera: glContext.getUniformLocation(program, "uCamera")
+    };
+  }
+
+  function getLineLocations(glContext, program) {
+    return {
+      aPosition: glContext.getAttribLocation(program, "aPosition"),
+      uProjection: glContext.getUniformLocation(program, "uProjection"),
+      uView: glContext.getUniformLocation(program, "uView"),
+      uModel: glContext.getUniformLocation(program, "uModel"),
+      uColor: glContext.getUniformLocation(program, "uColor")
+    };
+  }
+
+  function mat4Perspective(fovy, aspect, near, far) {
+    const f = 1 / Math.tan(fovy / 2);
+    const nf = 1 / (near - far);
+    return new Float32Array([
+      f / aspect, 0, 0, 0,
+      0, f, 0, 0,
+      0, 0, (far + near) * nf, -1,
+      0, 0, (2 * far * near) * nf, 0
+    ]);
+  }
+
+  function mat4LookAt(eye, target, up) {
+    const z = normalize([eye[0] - target[0], eye[1] - target[1], eye[2] - target[2]]);
+    const x = normalize(cross(up, z));
+    const y = cross(z, x);
+
+    return new Float32Array([
+      x[0], y[0], z[0], 0,
+      x[1], y[1], z[1], 0,
+      x[2], y[2], z[2], 0,
+      -dot(x, eye), -dot(y, eye), -dot(z, eye), 1
+    ]);
+  }
+
+  function mat4RotateZ(angle) {
+    const c = Math.cos(angle);
+    const s = Math.sin(angle);
+    return new Float32Array([
+      c, s, 0, 0,
+      -s, c, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ]);
+  }
+
+  function mat4Multiply(a, b) {
+    const out = new Float32Array(16);
+    for (let column = 0; column < 4; column += 1) {
+      for (let row = 0; row < 4; row += 1) {
+        out[column * 4 + row] =
+          a[0 * 4 + row] * b[column * 4 + 0] +
+          a[1 * 4 + row] * b[column * 4 + 1] +
+          a[2 * 4 + row] * b[column * 4 + 2] +
+          a[3 * 4 + row] * b[column * 4 + 3];
+      }
+    }
+    return out;
+  }
+
+  function mat3FromMat4(matrix) {
+    return new Float32Array([
+      matrix[0], matrix[1], matrix[2],
+      matrix[4], matrix[5], matrix[6],
+      matrix[8], matrix[9], matrix[10]
+    ]);
+  }
+
+  function transformPoint(matrix, point) {
+    const x = point[0];
+    const y = point[1];
+    const z = point[2];
+    return [
+      matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12],
+      matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13],
+      matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14],
+      matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15]
+    ];
+  }
+
+  function cross(a, b) {
+    return [
+      a[1] * b[2] - a[2] * b[1],
+      a[2] * b[0] - a[0] * b[2],
+      a[0] * b[1] - a[1] * b[0]
+    ];
+  }
+
+  function dot(a, b) {
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  }
+
+  function normalize(vector) {
+    const length = Math.hypot(vector[0], vector[1], vector[2]) || 1;
+    return [vector[0] / length, vector[1] / length, vector[2] / length];
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function radians(degrees) {
+    return (degrees * Math.PI) / 180;
+  }
+
+  function escapeHtml(value) {
+    return value.replace(/[&<>"']/g, (match) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[match]);
+  }
+})();
+
+    </script>
+  </body>
+</html>
