@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Interactive Practice Wheel 3D Model</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="viewer-shell">
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Procedural WebGL model</p>
+          <h1>Practice Wheel</h1>
+          <p class="summary">
+            High-detail interactive reconstruction of the referenced
+            18-spoke wheel drawing with beveled rims, recessed pockets,
+            raised hub detail, metallic shading, and inspection controls.
+          </p>
+        </div>
+        <div class="spec-card" aria-label="Model dimensions">
+          <span>OD</span><strong>6.60 in</strong>
+          <span>Spokes</span><strong>18 @ 20&deg;</strong>
+          <span>Render</span><strong>WebGL 2</strong>
+        </div>
+      </section>
+
+      <section class="viewport-wrap">
+        <canvas id="modelCanvas" aria-label="Interactive 3D model viewport"></canvas>
+        <div id="labels" class="labels" aria-hidden="true"></div>
+        <div class="controls" aria-label="Viewer controls">
+          <button id="resetView" type="button">Reset view</button>
+          <button id="toggleSpin" type="button" aria-pressed="false">Auto rotate</button>
+          <button id="toggleLabels" type="button" aria-pressed="true">Labels</button>
+          <button id="toggleWire" type="button" aria-pressed="false">Wireframe</button>
+          <button id="downloadObj" type="button">Download OBJ</button>
+          <label>
+            Material
+            <select id="materialSelect">
+              <option value="gunmetal" selected>dark satin metal</option>
+              <option value="aluminum">brushed aluminum</option>
+              <option value="blueprint">blueprint clay</option>
+            </select>
+          </label>
+        </div>
+        <div class="navigation-help">
+          <strong>Mouse:</strong> drag to rotate, shift/right-drag to pan, wheel to zoom.
+          Double-click resets the camera.
+        </div>
+      </section>
+    </main>
+
+    <script src="src/model.js"></script>
+    <script src="src/app.js"></script>
+  </body>
+</html>

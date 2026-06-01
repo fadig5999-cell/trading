@@ -1,0 +1,246 @@
+:root {
+  color-scheme: dark;
+  --panel: rgba(14, 19, 29, 0.82);
+  --panel-strong: rgba(18, 24, 36, 0.94);
+  --line: rgba(255, 255, 255, 0.14);
+  --text: #eef3ff;
+  --muted: #aab5c8;
+  --accent: #7fd4ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(74, 117, 163, 0.28), transparent 34rem),
+    radial-gradient(circle at 80% 10%, rgba(83, 176, 196, 0.2), transparent 30rem),
+    linear-gradient(135deg, #06080d 0%, #111827 52%, #070a10 100%);
+  color: var(--text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+.viewer-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
+  height: 100vh;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.hero-panel {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  background: var(--panel);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+
+.summary {
+  max-width: 54rem;
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.spec-card {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-content: center;
+  gap: 0.35rem 0.85rem;
+  min-width: 13rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.spec-card span {
+  color: var(--muted);
+}
+
+.spec-card strong {
+  color: #fff;
+  text-align: right;
+}
+
+.viewport-wrap {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 50% 38%, rgba(141, 194, 255, 0.08), transparent 28rem),
+    #070b12;
+  background-size: 42px 42px, 42px 42px, auto, auto;
+  box-shadow: inset 0 0 6rem rgba(0, 0, 0, 0.44);
+}
+
+#modelCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  outline: none;
+  touch-action: none;
+}
+
+#modelCanvas:active {
+  cursor: grabbing;
+}
+
+.controls {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: min(52rem, calc(100% - 2rem));
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--panel-strong);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.28);
+}
+
+.controls button,
+.controls select {
+  min-height: 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 0.42rem 0.7rem;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.controls button:hover,
+.controls select:hover {
+  border-color: rgba(127, 212, 255, 0.65);
+}
+
+.controls button[aria-pressed="true"] {
+  background: rgba(127, 212, 255, 0.22);
+  border-color: rgba(127, 212, 255, 0.72);
+}
+
+.controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+}
+
+.navigation-help {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: 35rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: var(--panel-strong);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 8.5rem;
+  padding: 0.46rem 0.58rem;
+  border: 1px solid rgba(127, 212, 255, 0.5);
+  border-radius: 0.65rem;
+  background: rgba(5, 9, 15, 0.78);
+  color: #e8f7ff;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  text-shadow: 0 1px 1px #000;
+  box-shadow: 0 0.7rem 1.7rem rgba(0, 0, 0, 0.28);
+}
+
+.hotspot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 1.8rem;
+  background: linear-gradient(rgba(127, 212, 255, 0.9), transparent);
+}
+
+.hotspot strong {
+  display: block;
+  color: #fff;
+  font-size: 0.83rem;
+}
+
+@media (max-width: 760px) {
+  body {
+    overflow: auto;
+  }
+
+  .viewer-shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-panel {
+    flex-direction: column;
+  }
+
+  .viewport-wrap {
+    min-height: 72vh;
+  }
+
+  .navigation-help {
+    left: 1rem;
+    right: 1rem;
+  }
+}
