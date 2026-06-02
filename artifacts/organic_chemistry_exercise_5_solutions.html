@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>פתרון תרגיל 5 - כימיה אורגנית</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      color: #1f2933;
+      background: #ffffff;
+      font-family: "Arial", "Noto Sans Hebrew", "DejaVu Sans", sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .page {
+      max-width: 790px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      border-bottom: 2px solid #1f2933;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 800;
+      color: #0b3d60;
+    }
+    .subtitle {
+      margin-top: 5px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    h2 {
+      margin: 26px 0 9px;
+      padding: 8px 12px;
+      border-right: 6px solid #0b6fa4;
+      background: #edf7fc;
+      color: #0b3d60;
+      font-size: 20px;
+    }
+    h3 {
+      margin: 18px 0 7px;
+      color: #16324f;
+      font-size: 16px;
+    }
+    p {
+      margin: 6px 0;
+    }
+    .question {
+      margin: 8px 0 12px;
+      padding: 10px 12px;
+      border: 1px solid #d6e3ec;
+      border-radius: 8px;
+      background: #fbfdff;
+      font-weight: 700;
+    }
+    .answer {
+      margin: 10px 0;
+    }
+    .rule {
+      margin: 10px 0;
+      padding: 10px 12px;
+      border-right: 5px solid #f59e0b;
+      border-radius: 7px;
+      background: #fff8eb;
+    }
+    .final {
+      margin: 9px 0;
+      padding: 9px 12px;
+      border: 1px solid #bed7c3;
+      border-radius: 7px;
+      background: #f1fbf3;
+      font-weight: 700;
+    }
+    .chem {
+      direction: ltr;
+      unicode-bidi: isolate;
+      display: inline-block;
+      font-family: "Arial", "DejaVu Sans", sans-serif;
+      letter-spacing: .1px;
+    }
+    .note {
+      color: #475569;
+      font-size: 13px;
+    }
+    ol {
+      margin-top: 6px;
+      padding-right: 23px;
+    }
+    li {
+      margin: 4px 0;
+    }
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 12px 0 18px;
+      break-inside: avoid;
+    }
+    .diagram-card {
+      border: 1px solid #d5dde5;
+      border-radius: 10px;
+      padding: 10px 10px 8px;
+      background: #ffffff;
+      break-inside: avoid;
+    }
+    .diagram-title {
+      text-align: center;
+      font-weight: 800;
+      margin-bottom: 5px;
+      color: #0b3d60;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      direction: ltr;
+      overflow: visible;
+    }
+    .bond {
+      stroke: #111827;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+    }
+    .dbl {
+      stroke: #111827;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+    }
+    .svg-label {
+      font-family: "Arial", "DejaVu Sans", sans-serif;
+      fill: #111827;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .svg-small {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .priority {
+      fill: #0b6fa4;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .page-break {
+      break-before: page;
+    }
+    .checklist {
+      margin-top: 22px;
+      padding: 12px 14px;
+      border: 1px solid #d5dde5;
+      border-radius: 9px;
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>פתרון תרגיל מספר 5 - כימיה אורגנית</h1>
+    <div class="subtitle">איזומריית ציס/טרנס ואיזומריית <span class="chem">E/Z</span> באלקנים</div>
+  </header>
+
+  <section>
+    <h2>שאלה 1</h2>
+    <div class="question">
+      ציירו לכל מולקולה את צורת הציס והטרנס שלה:
+      <br>א. <span class="chem">2,3-dimethyl-1-pentene</span>
+      <br>ב. שני איזומרים של <span class="chem">3-octene</span>
+    </div>
+
+    <h3>א. <span class="chem">2,3-dimethyl-1-pentene</span></h3>
+    <div class="answer">
+      <p><strong>מבנה המולקולה:</strong> <span class="chem">CH2=C(CH3)-CH(CH3)-CH2-CH3</span></p>
+      <div class="rule">
+        <strong>כלל חשוב:</strong> איזומריית ציס/טרנס סביב קשר כפול קיימת רק כאשר
+        <strong>לכל אחד משני פחמני הקשר הכפול יש שני תחליפים שונים</strong>.
+      </div>
+      <ol>
+        <li>במולקולה זו הקשר הכפול נמצא בקצה השרשרת: <span class="chem">C1=C2</span>.</li>
+        <li>הפחמן הראשון של הקשר הכפול הוא <span class="chem">CH2</span>, כלומר קשורים אליו שני אטומי מימן זהים.</li>
+        <li>לכן אי אפשר להגדיר צדדים שונים של הקשר הכפול, ואין משמעות לציס או טרנס.</li>
+      </ol>
+      <div class="final">תשובה סופית: למולקולה <span class="chem">2,3-dimethyl-1-pentene</span> אין איזומרי ציס/טרנס.</div>
+    </div>
+
+    <h3>ב. שני האיזומרים של <span class="chem">3-octene</span></h3>
+    <div class="answer">
+      <p><strong>מבנה בסיסי:</strong> <span class="chem">CH3CH2-CH=CH-CH2CH2CH2CH3</span></p>
+      <ol>
+        <li>בכל אחד מפחמני הקשר הכפול יש אטום מימן וקבוצת אלקיל, ולכן קיימת איזומריית ציס/טרנס.</li>
+        <li>בצורת <strong>ציס</strong>, שתי קבוצות הפחמן הגדולות נמצאות באותו צד של הקשר הכפול.</li>
+        <li>בצורת <strong>טרנס</strong>, שתי קבוצות הפחמן הגדולות נמצאות בצדדים מנוגדים.</li>
+      </ol>
+      <div class="diagram-grid">
+        <div class="diagram-card">
+          <div class="diagram-title">cis-3-octene, כלומר <span class="chem">(Z)-3-octene</span></div>
+          <svg viewBox="0 0 520 210" role="img" aria-label="cis 3 octene">
+            <line class="dbl" x1="220" y1="94" x2="300" y2="94"/>
+            <line class="dbl" x1="220" y1="106" x2="300" y2="106"/>
+            <line class="bond" x1="220" y1="100" x2="130" y2="45"/>
+            <line class="bond" x1="300" y1="100" x2="390" y2="45"/>
+            <line class="bond" x1="220" y1="100" x2="135" y2="160"/>
+            <line class="bond" x1="300" y1="100" x2="385" y2="160"/>
+            <text class="svg-label" x="58" y="43">CH3CH2</text>
+            <text class="svg-label" x="358" y="43">CH2CH2CH2CH3</text>
+            <text class="svg-label" x="118" y="179">H</text>
+            <text class="svg-label" x="390" y="179">H</text>
+          </svg>
+        </div>
+        <div class="diagram-card">
+          <div class="diagram-title">trans-3-octene, כלומר <span class="chem">(E)-3-octene</span></div>
+          <svg viewBox="0 0 520 210" role="img" aria-label="trans 3 octene">
+            <line class="dbl" x1="220" y1="94" x2="300" y2="94"/>
+            <line class="dbl" x1="220" y1="106" x2="300" y2="106"/>
+            <line class="bond" x1="220" y1="100" x2="130" y2="45"/>
+            <line class="bond" x1="300" y1="100" x2="390" y2="45"/>
+            <line class="bond" x1="220" y1="100" x2="135" y2="160"/>
+            <line class="bond" x1="300" y1="100" x2="385" y2="160"/>
+            <text class="svg-label" x="58" y="43">CH3CH2</text>
+            <text class="svg-label" x="388" y="43">H</text>
+            <text class="svg-label" x="118" y="179">H</text>
+            <text class="svg-label" x="330" y="179">CH2CH2CH2CH3</text>
+          </svg>
+        </div>
+      </div>
+      <div class="final">תשובה סופית: שני האיזומרים הם <span class="chem">cis-3-octene</span> ו-<span class="chem">trans-3-octene</span>.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>שאלה 2</h2>
+    <div class="question">
+      ציירו את המולקולה: <span class="chem">(Z)-3-isopropyl-2-heptene</span>
+    </div>
+
+    <div class="answer">
+      <p><strong>שלד המולקולה:</strong> <span class="chem">CH3-CH=C(CH(CH3)2)-CH2CH2CH2CH3</span></p>
+      <ol>
+        <li>הקשר הכפול נמצא בין פחמן 2 לפחמן 3.</li>
+        <li>על פחמן 2 נמצאים <span class="chem">CH3</span> ו-<span class="chem">H</span>. לפי כללי <span class="chem">CIP</span>, לקבוצת <span class="chem">CH3</span> עדיפות גבוהה יותר ממימן.</li>
+        <li>על פחמן 3 נמצאות קבוצת איזופרופיל <span class="chem">CH(CH3)2</span> וקבוצת בוטיל <span class="chem">CH2CH2CH2CH3</span>.</li>
+        <li>לאיזופרופיל עדיפות גבוהה יותר, כי הפחמן הראשון שלו קשור ל-<span class="chem">C,C,H</span>, ואילו הפחמן הראשון של הבוטיל קשור ל-<span class="chem">C,H,H</span>.</li>
+        <li>האות <span class="chem">Z</span> פירושה שהקבוצות בעלות העדיפות הגבוהה נמצאות באותו צד.</li>
+      </ol>
+      <div class="diagram-card">
+        <div class="diagram-title"><span class="chem">(Z)-3-isopropyl-2-heptene</span></div>
+        <svg viewBox="0 0 560 220" role="img" aria-label="Z 3 isopropyl 2 heptene">
+          <line class="dbl" x1="235" y1="99" x2="325" y2="99"/>
+          <line class="dbl" x1="235" y1="111" x2="325" y2="111"/>
+          <line class="bond" x1="235" y1="105" x2="145" y2="50"/>
+          <line class="bond" x1="325" y1="105" x2="415" y2="50"/>
+          <line class="bond" x1="235" y1="105" x2="150" y2="168"/>
+          <line class="bond" x1="325" y1="105" x2="410" y2="168"/>
+          <text class="svg-label" x="102" y="48">CH3</text>
+          <text class="svg-label" x="397" y="48">CH(CH3)2</text>
+          <text class="priority" x="108" y="67">עדיפות גבוהה</text>
+          <text class="priority" x="395" y="67">עדיפות גבוהה</text>
+          <text class="svg-label" x="134" y="188">H</text>
+          <text class="svg-label" x="376" y="188">CH2CH2CH2CH3</text>
+        </svg>
+      </div>
+      <div class="final">תשובה סופית: יש לצייר את <span class="chem">CH3</span> ואת קבוצת האיזופרופיל <span class="chem">CH(CH3)2</span> באותו צד של הקשר הכפול.</div>
+    </div>
+  </section>
+
+  <section class="page-break">
+    <h2>שאלה 3</h2>
+    <div class="question">
+      ציירו את איזומרי <span class="chem">E</span> ו-<span class="chem">Z</span> למולקולות הבאות.
+      למולקולות 1-3 תנו גם שמות.
+    </div>
+
+    <div class="rule">
+      <strong>תזכורת לכללי <span class="chem">E/Z</span>:</strong>
+      בכל אחד מפחמני הקשר הכפול מדרגים את שני התחליפים לפי כללי <span class="chem">CIP</span>.
+      אם שתי הקבוצות בעלות העדיפות הגבוהה באותו צד - האיזומר הוא <span class="chem">Z</span>;
+      אם הן בצדדים מנוגדים - האיזומר הוא <span class="chem">E</span>.
+    </div>
+
+    <h3>מולקולה 1: <span class="chem">CH3CH2CH=CHCH3</span></h3>
+    <div class="answer">
+      <p><strong>שם השלד:</strong> <span class="chem">pent-2-ene</span>.</p>
+      <ol>
+        <li>המספור נבחר כך שהקשר הכפול יקבל את המספר הנמוך ביותר: <span class="chem">pent-2-ene</span>.</li>
+        <li>בצד אחד של הקשר הכפול העדיפות היא לקבוצת <span class="chem">CH3CH2</span> על פני <span class="chem">H</span>.</li>
+        <li>בצד השני העדיפות היא לקבוצת <span class="chem">CH3</span> על פני <span class="chem">H</span>.</li>
+      </ol>
+      <div class="diagram-grid">
+        <div class="diagram-card">
+          <div class="diagram-title"><span class="chem">(Z)-pent-2-ene</span></div>
+          <svg viewBox="0 0 520 210" role="img" aria-label="Z pent 2 ene">
+            <line class="dbl" x1="220" y1="94" x2="300" y2="94"/>
+            <line class="dbl" x1="220" y1="106" x2="300" y2="106"/>
+            <line class="bond" x1="220" y1="100" x2="130" y2="45"/>
+            <line class="bond" x1="300" y1="100" x2="390" y2="45"/>
+            <line class="bond" x1="220" y1="100" x2="135" y2="160"/>
+            <line class="bond" x1="300" y1="100" x2="385" y2="160"/>
+            <text class="svg-label" x="58" y="43">CH3CH2</text>
+            <text class="svg-label" x="360" y="43">CH3</text>
+            <text class="svg-label" x="118" y="179">H</text>
+            <text class="svg-label" x="390" y="179">H</text>
+          </svg>
+        </div>
+        <div class="diagram-card">
+          <div class="diagram-title"><span class="chem">(E)-pent-2-ene</span></div>
+          <svg viewBox="0 0 520 210" role="img" aria-label="E pent 2 ene">
+            <line class="dbl" x1="220" y1="94" x2="300" y2="94"/>
+            <line class="dbl" x1="220" y1="106" x2="300" y2="106"/>
+            <line class="bond" x1="220" y1="100" x2="130" y2="45"/>
+            <line class="bond" x1="300" y1="100" x2="390" y2="45"/>
+            <line class="bond" x1="220" y1="100" x2="135" y2="160"/>
+            <line class="bond" x1="300" y1="100" x2="385" y2="160"/>
+            <text class="svg-label" x="58" y="43">CH3CH2</text>
+            <text class="svg-label" x="388" y="43">H</text>
+            <text class="svg-label" x="118" y="179">H</text>
+            <text class="svg-label" x="348" y="179">CH3</text>
+          </svg>
+        </div>
+      </div>
+      <div class="final">תשובה סופית: שמות האיזומרים הם <span class="chem">(Z)-pent-2-ene</span> ו-<span class="chem">(E)-pent-2-ene</span>.</div>
+    </div>
+
+    <h3>מולקולה 2: <span class="chem">CH3CH2C(Cl)=CHCH2CH3</span></h3>
+    <div class="answer">
+      <p><strong>שם השלד:</strong> <span class="chem">3-chlorohex-3-ene</span>.</p>
+      <ol>
+        <li>השרשרת הראשית כוללת 6 פחמנים וקשר כפול בעמדה 3: <span class="chem">hex-3-ene</span>.</li>
+        <li>אטום הכלור נמצא על פחמן 3, ולכן השם הוא <span class="chem">3-chlorohex-3-ene</span>.</li>
+        <li>על פחמן שמאלי של הקשר הכפול: <span class="chem">Cl</span> מקבל עדיפות גבוהה יותר מ-<span class="chem">CH2CH3</span>.</li>
+        <li>על פחמן ימני של הקשר הכפול: <span class="chem">CH2CH3</span> מקבל עדיפות גבוהה יותר מ-<span class="chem">H</span>.</li>
+      </ol>
+      <div class="diagram-grid">
+        <div class="diagram-card">
+          <div class="diagram-title"><span class="chem">(Z)-3-chlorohex-3-ene</span></div>
+          <svg viewBox="0 0 520 210" role="img" aria-label="Z 3 chlorohex 3 ene">
+            <line class="dbl" x1="220" y1="94" x2="300" y2="94"/>
+            <line class="dbl" x1="220" y1="106" x2="300" y2="106"/>
+            <line class="bond" x1="220" y1="100" x2="130" y2="45"/>
+            <line class="bond" x1="300" y1="100" x2="390" y2="45"/>
+            <line class="bond" x1="220" y1="100" x2="135" y2="160"/>
+            <line class="bond" x1="300" y1="100" x2="385" y2="160"/>
+            <text class="svg-label" x="105" y="43">Cl</text>
+            <text class="svg-label" x="340" y="43">CH2CH3</text>
+            <text class="svg-label" x="70" y="179">CH2CH3</text>
+            <text class="svg-label" x="390" y="179">H</text>
+          </svg>
+        </div>
+        <div class="diagram-card">
+          <div class="diagram-title"><span class="chem">(E)-3-chlorohex-3-ene</span></div>
+          <svg viewBox="0 0 520 210" role="img" aria-label="E 3 chlorohex 3 ene">
+            <line class="dbl" x1="220" y1="94" x2="300" y2="94"/>
+            <line class="dbl" x1="220" y1="106" x2="300" y2="106"/>
+            <line class="bond" x1="220" y1="100" x2="130" y2="45"/>
+            <line class="bond" x1="300" y1="100" x2="390" y2="45"/>
+            <line class="bond" x1="220" y1="100" x2="135" y2="160"/>
+            <line class="bond" x1="300" y1="100" x2="385" y2="160"/>
+            <text class="svg-label" x="105" y="43">Cl</text>
+            <text class="svg-label" x="388" y="43">H</text>
+            <text class="svg-label" x="70" y="179">CH2CH3</text>
+            <text class="svg-label" x="330" y="179">CH2CH3</text>
+          </svg>
+        </div>
+      </div>
+      <div class="final">תשובה סופית: שמות האיזומרים הם <span class="chem">(Z)-3-chlorohex-3-ene</span> ו-<span class="chem">(E)-3-chlorohex-3-ene</span>.</div>
+    </div>
+
+    <h3>מולקולה 3</h3>
+    <div class="answer">
+      <p><strong>מבנה מקוצר:</strong> פחמן שמאלי של הקשר הכפול נושא <span class="chem">CH3CH2</span> ו-<span class="chem">CH3CH2CH2CH2</span>;
+        פחמן ימני נושא <span class="chem">CH2Cl</span> ו-<span class="chem">CH(CH3)2</span>.</p>
+      <p><strong>שם השלד:</strong> <span class="chem">3-(chloromethyl)-4-ethyl-2-methyloct-3-ene</span>.</p>
+      <ol>
+        <li>השרשרת הארוכה ביותר הכוללת את הקשר הכפול מכילה 8 פחמנים, ולכן השלד הוא <span class="chem">oct-3-ene</span>.</li>
+        <li>המספור מתחיל מצד האיזופרופיל כך שהקשר הכפול יקבל את המספר הנמוך ביותר: <span class="chem">3</span>.</li>
+        <li>התחליפים הם: <span class="chem">2-methyl</span>, <span class="chem">3-(chloromethyl)</span>, <span class="chem">4-ethyl</span>.</li>
+        <li>בפחמן השמאלי של הקשר הכפול לקבוצת הבוטיל <span class="chem">CH3CH2CH2CH2</span> עדיפות גבוהה יותר מאתיל, כי השרשרת ממשיכה לעוד פחמן.</li>
+        <li>בפחמן הימני של הקשר הכפול לקבוצת <span class="chem">CH2Cl</span> עדיפות גבוהה יותר מאיזופרופיל, כי כבר בשכבת ההשוואה הראשונה מופיע האטום <span class="chem">Cl</span>.</li>
+      </ol>
+      <div class="diagram-grid">
+        <div class="diagram-card">
+          <div class="diagram-title"><span class="chem">(Z)-3-(chloromethyl)-4-ethyl-2-methyloct-3-ene</span></div>
+          <svg viewBox="0 0 560 220" role="img" aria-label="Z molecule 3">
+            <line class="dbl" x1="235" y1="99" x2="325" y2="99"/>
+            <line class="dbl" x1="235" y1="111" x2="325" y2="111"/>
+            <line class="bond" x1="235" y1="105" x2="145" y2="50"/>
+            <line class="bond" x1="325" y1="105" x2="415" y2="50"/>
+            <line class="bond" x1="235" y1="105" x2="150" y2="168"/>
+            <line class="bond" x1="325" y1="105" x2="410" y2="168"/>
+            <text class="svg-small" x="24" y="48">CH3CH2CH2CH2</text>
+            <text class="svg-label" x="397" y="48">CH2Cl</text>
+            <text class="svg-label" x="78" y="188">CH3CH2</text>
+            <text class="svg-label" x="376" y="188">CH(CH3)2</text>
+          </svg>
+        </div>
+        <div class="diagram-card">
+          <div class="diagram-title"><span class="chem">(E)-3-(chloromethyl)-4-ethyl-2-methyloct-3-ene</span></div>
+          <svg viewBox="0 0 560 220" role="img" aria-label="E molecule 3">
+            <line class="dbl" x1="235" y1="99" x2="325" y2="99"/>
+            <line class="dbl" x1="235" y1="111" x2="325" y2="111"/>
+            <line class="bond" x1="235" y1="105" x2="145" y2="50"/>
+            <line class="bond" x1="325" y1="105" x2="415" y2="50"/>
+            <line class="bond" x1="235" y1="105" x2="150" y2="168"/>
+            <line class="bond" x1="325" y1="105" x2="410" y2="168"/>
+            <text class="svg-small" x="24" y="48">CH3CH2CH2CH2</text>
+            <text class="svg-label" x="376" y="48">CH(CH3)2</text>
+            <text class="svg-label" x="78" y="188">CH3CH2</text>
+            <text class="svg-label" x="397" y="188">CH2Cl</text>
+          </svg>
+        </div>
+      </div>
+      <div class="final">תשובה סופית: שמות האיזומרים הם <span class="chem">(Z)-3-(chloromethyl)-4-ethyl-2-methyloct-3-ene</span> ו-<span class="chem">(E)-3-(chloromethyl)-4-ethyl-2-methyloct-3-ene</span>.</div>
+    </div>
+
+    <h3>מולקולה 4</h3>
+    <div class="answer">
+      <p><strong>מבנה מקוצר:</strong> <span class="chem">HOCH2CH2-C(CHO)=C(C(CH3)3)-C≡CH</span></p>
+      <ol>
+        <li>בפחמן השמאלי של הקשר הכפול משווים בין <span class="chem">CHO</span> לבין <span class="chem">CH2CH2OH</span>.</li>
+        <li>לקבוצת <span class="chem">CHO</span> עדיפות גבוהה יותר, כי פחמן הקרבוניל נחשב קשור ל-<span class="chem">O,O,H</span>, בעוד שפחמן <span class="chem">CH2</span> קשור ל-<span class="chem">C,H,H</span>.</li>
+        <li>בפחמן הימני משווים בין <span class="chem">C≡CH</span> לבין <span class="chem">C(CH3)3</span>.</li>
+        <li>לאחר הרחבת הקשר המשולש לפי כללי <span class="chem">CIP</span>, לקבוצת האתיניל <span class="chem">C≡CH</span> עדיפות גבוהה יותר.</li>
+      </ol>
+      <div class="diagram-grid">
+        <div class="diagram-card">
+          <div class="diagram-title">איזומר <span class="chem">Z</span></div>
+          <svg viewBox="0 0 560 220" role="img" aria-label="Z molecule 4">
+            <line class="dbl" x1="235" y1="99" x2="325" y2="99"/>
+            <line class="dbl" x1="235" y1="111" x2="325" y2="111"/>
+            <line class="bond" x1="235" y1="105" x2="145" y2="50"/>
+            <line class="bond" x1="325" y1="105" x2="415" y2="50"/>
+            <line class="bond" x1="235" y1="105" x2="150" y2="168"/>
+            <line class="bond" x1="325" y1="105" x2="410" y2="168"/>
+            <text class="svg-label" x="100" y="48">CHO</text>
+            <text class="svg-label" x="398" y="48">C≡CH</text>
+            <text class="svg-label" x="54" y="188">HOCH2CH2</text>
+            <text class="svg-label" x="354" y="188">C(CH3)3</text>
+          </svg>
+        </div>
+        <div class="diagram-card">
+          <div class="diagram-title">איזומר <span class="chem">E</span></div>
+          <svg viewBox="0 0 560 220" role="img" aria-label="E molecule 4">
+            <line class="dbl" x1="235" y1="99" x2="325" y2="99"/>
+            <line class="dbl" x1="235" y1="111" x2="325" y2="111"/>
+            <line class="bond" x1="235" y1="105" x2="145" y2="50"/>
+            <line class="bond" x1="325" y1="105" x2="415" y2="50"/>
+            <line class="bond" x1="235" y1="105" x2="150" y2="168"/>
+            <line class="bond" x1="325" y1="105" x2="410" y2="168"/>
+            <text class="svg-label" x="100" y="48">CHO</text>
+            <text class="svg-label" x="354" y="48">C(CH3)3</text>
+            <text class="svg-label" x="54" y="188">HOCH2CH2</text>
+            <text class="svg-label" x="398" y="188">C≡CH</text>
+          </svg>
+        </div>
+      </div>
+      <div class="final">תשובה סופית: ב-<span class="chem">Z</span> הקבוצות <span class="chem">CHO</span> ו-<span class="chem">C≡CH</span> באותו צד; ב-<span class="chem">E</span> הן בצדדים מנוגדים.</div>
+    </div>
+  </section>
+
+  <section class="checklist">
+    <h2 style="margin-top: 0;">בדיקה מסכמת</h2>
+    <ul>
+      <li>נבדק תנאי בסיסי לקיום איזומריית ציס/טרנס: שני תחליפים שונים על כל פחמן של הקשר הכפול.</li>
+      <li>בכל מבנה עם <span class="chem">E/Z</span> נקבעו עדיפויות לפי כללי <span class="chem">CIP</span>.</li>
+      <li>במולקולות 1-3 בשאלה 3 ניתנו שמות מלאים לשני איזומרי <span class="chem">E/Z</span>.</li>
+      <li>השרטוטים מציגים במפורש אם הקבוצות בעלות העדיפות הגבוהה באותו צד או בצדדים מנוגדים.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
