@@ -5,6 +5,13 @@ reconstruction of the supplied mechanical drawing. The model focuses on the
 visible circular wheel: 18 repeated raised ribs, a rolled outer rim, recessed
 pockets, raised hub, bore, chamfers, and metallic inspection materials.
 
+## Mimad practice exams
+
+The repository also includes `mimad-practice-exams.md`, a set of 10 original
+Mimad-style practice simulations. Each simulation contains six sections
+(Hebrew, English, and math, two sections each), 150 multiple-choice questions,
+and an answer sheet only, without explanations or worked solutions.
+
 ## Run locally
 
 Open `index.html` directly in a modern browser, or serve the folder:
