@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ניהול מלאי שיש — Marble Inventory Management
 
-## Getting Started
+מערכת ניהול מלאי מקצועית לעסקי שיש ואבן טבעית, בעברית ו-RTL מלא, עם מסד
+נתונים אמיתי (Supabase), התחברות מאובטחת, הרשאות מנהל/צפייה, וניהול מלאי
+בזמן אמת כולל מכירת לוחות בלחיצת כפתור.
 
-First, run the development server:
+Built with **Next.js 16** (App Router, Server Actions), **TypeScript**,
+**Tailwind CSS v4**, and **Supabase** (Postgres database, Auth, Storage).
+
+## תכונות עיקריות
+
+- 🔐 **התחברות מאובטחת** — Supabase Auth, עם הרשאות `admin` (עריכה מלאה) ו-`viewer` (צפייה בלבד).
+- 📊 **לוח בקרה** — סוגי שיש, סה"כ לוחות במלאי, מלאי נמוך, נמכר היום/החודש, שווי מלאי.
+- 📦 **ניהול מלאי מלא** — טבלה וכרטיסים, הוספה/עריכה/מחיקה, תמונות, מחירים, מיקום.
+- ➕➖🛒 **עדכון מלאי בלחיצת כפתור** — "מכור לוח" מפחית מלאי אוטומטית (לא יורד מתחת לאפס), "הוסף/הפחת מלאי", עדכון כמות ידני.
+- 🏷️ **סטטוס אוטומטי** — "במלאי" / "מלאי נמוך" / "אזל מהמלאי" לפי כמות וסף מוגדר.
+- 🧾 **היסטוריית מכירות** — כל מכירה נשמרת עם תאריך, שעה, כמות, מחיר ופרטי לקוח (אופציונלי).
+- 🔍 **חיפוש וסינון** — לפי שם, קטגוריה, צבע, עובי, מיקום וסטטוס מלאי.
+- 🖼️ **גלריה** — תצוגה חזותית מפוארת של כל סוגי השיש, עם כפתור מכירה מהיר.
+- 📈 **דוחות** — סוגים הנמכרים ביותר, שווי מלאי, מכירות חודשיות, רשימת מלאי נמוך.
+- 📱 **מותאם למובייל** — עובד מצוין בטלפון ובמחשב, כולל תפריט צד נייד.
+- 🧱 **מסד נתונים אמיתי** — כל הנתונים נשמרים לצמיתות ב-Postgres (Supabase), עם היסטוריית תנועות מלאי מלאה לצורך ביקורת.
+
+## מבנה טכני
+
+| שכבה | טכנולוגיה |
+| --- | --- |
+| Frontend / Backend | Next.js 16 (App Router + Server Actions) |
+| שפה | TypeScript |
+| עיצוב | Tailwind CSS v4, גופן Rubik (עברית), RTL מלא |
+| מסד נתונים | Supabase (Postgres) |
+| אימות | Supabase Auth |
+| אחסון תמונות | Supabase Storage |
+| גרפים | Recharts |
+
+## הפעלה — הגדרת Supabase (חד פעמי, כ-5-10 דקות)
+
+1. **צור פרויקט**: היכנס אל [supabase.com](https://supabase.com), פתח חשבון חינמי וצור פרויקט חדש.
+2. **הרץ את סקריפט ההתקנה**: בלוח הבקרה עבור אל **SQL Editor**, פתח שאילתה חדשה, הדבק את תוכן הקובץ
+   [`supabase/migrations/0001_init.sql`](./supabase/migrations/0001_init.sql) והרץ אותו.
+   זה יוצר את כל הטבלאות (`marble_types`, `sales`, `stock_movements`, `profiles`), פונקציות (`sell_slabs`,
+   `adjust_stock`), הרשאות (RLS) ומאגר תמונות (`marble-images`).
+3. **(אופציונלי) נתוני דוגמה**: להרצת [`supabase/seed.sql`](./supabase/seed.sql) לאחר מכן, אם תרצה שהמערכת תעלה עם כמה סוגי שיש לדוגמה.
+4. **צור משתמש מנהל**: בלוח הבקרה עבור אל **Authentication → Users → Add user**, הזן אימייל וסיסמה.
+   המשתמש **הראשון** שנוצר בפרויקט מקבל אוטומטית הרשאת `admin`. משתמשים נוספים יתחילו כ-`viewer` וניתן לשנות
+   את ההרשאה שלהם בעמוד **הגדרות** באפליקציה (ע"י מנהל קיים).
+5. **העתק מפתחות API**: ב-**Project Settings → API** העתק את `Project URL` ואת `anon public key`.
+
+## הפעלה מקומית
 
 ```bash
+npm install
+cp .env.local.example .env.local
+# מלא את NEXT_PUBLIC_SUPABASE_URL ו-NEXT_PUBLIC_SUPABASE_ANON_KEY בקובץ .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+האפליקציה תרוץ בכתובת `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## פרסום לאינטרנט (קבלת קישור חי)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+הדרך הפשוטה ביותר היא [Vercel](https://vercel.com) (חינמי לפרויקטים כאלה):
 
-## Learn More
+1. חבר את הריפוזיטורי הזה לחשבון Vercel שלך (Import Git Repository).
+2. הגדר Root Directory לתיקייה `marble-inventory` (אם הפרויקט חלק מריפוזיטורי גדול יותר).
+3. הוסף שני משתני סביבה בהגדרות הפרויקט ב-Vercel:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. לחץ Deploy. בתוך דקה תקבל קישור חי (למשל `https://your-app.vercel.app`) שעובד מהטלפון ומהמחשב.
 
-To learn more about Next.js, take a look at the following resources:
+ניתן לפרוס גם ל-Netlify, Railway או כל שירות שתומך ב-Next.js — הדרישה היחידה היא הגדרת שני משתני
+הסביבה הנ"ל.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **חשוב**: אם משתני הסביבה לא מוגדרים, האפליקציה תציג אוטומטית עמוד הנחיות התקנה (`/setup`) במקום קריסה.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## הרשאות משתמשים
 
-## Deploy on Vercel
+| הרשאה | יכולות |
+| --- | --- |
+| **מנהל (admin)** | הוספה, עריכה, מחיקה, מכירה, עדכון מלאי, ניהול הרשאות משתמשים |
+| **צפייה (viewer)** | צפייה במלאי, בגלריה, בדוחות ובהיסטוריית המכירות — ללא יכולת עריכה |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+כל בדיקות ההרשאה מתבצעות גם בצד השרת (Server Actions + RLS policies במסד הנתונים), כך שלא ניתן
+לעקוף אותן מהדפדפן.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## מצב תצוגה מקומי (DEMO_MODE)
+
+להרצה מהירה של העיצוב **בלי** פרויקט Supabase (לצורכי פיתוח/תצוגה בלבד), אפשר להריץ:
+
+```bash
+DEMO_MODE=1 npm run dev
+```
+
+במצב זה האפליקציה מדלגת על ההתחברות ומציגה נתוני דוגמה קבועים מהקובץ `src/lib/demo-data.ts`. **לעולם
+אין להגדיר `DEMO_MODE=1` בסביבת פרודקשן** — זה מיועד לתצוגה מקדימה בלבד ואינו כותב לאף מסד נתונים אמיתי.
+
+## מבנה הפרויקט
+
+```
+src/
+  app/
+    login/                  עמוד התחברות
+    setup/                  עמוד הנחיות התקנה (כשאין חיבור ל-Supabase)
+    (app)/                  כל הדפים המוגנים (מחייבים התחברות)
+      dashboard/            לוח בקרה
+      inventory/            מלאי (רשימה, הוספה, פרטים, עריכה)
+      sales/                היסטוריית מכירות
+      gallery/               גלריה
+      reports/               דוחות
+      settings/              הגדרות והרשאות
+  components/                קומפוננטות UI, טפסים, טבלאות, כרטיסים
+  lib/
+    actions/                 Server Actions (יצירה/עריכה/מכירה/מלאי)
+    supabase/                לקוחות Supabase (client/server/proxy)
+    data.ts                  שכבת גישה לנתונים (Server Components)
+    types.ts, constants.ts, utils.ts
+supabase/
+  migrations/0001_init.sql   סכמת מסד הנתונים המלאה + RLS + אחסון
+  seed.sql                   נתוני דוגמה אופציונליים
+```
+
+## אבטחה
+
+- כל פעולת כתיבה (הוספה, עריכה, מחיקה, מכירה, עדכון מלאי) מוגנת ב-Row Level Security בפרויקט
+  Supabase — רק משתמשים עם הרשאת `admin` בטבלת `profiles` יכולים לביצע אותה, גם אם מישהו ינסה
+  לקרוא ל-API ישירות.
+- מכירת לוח והפחתת/הוספת מלאי מתבצעות דרך פונקציות `sell_slabs` / `adjust_stock` בבסיס הנתונים
+  (Postgres functions) בתוך טרנזקציה אחת, כך שהכמות לעולם לא תרד מתחת לאפס ולא יתאפשרו מצבי תחרות
+  (race conditions) בין שתי מכירות שמתבצעות באותו רגע.
+- קבצי תמונה מאוחסנים ב-Supabase Storage במאגר ציבורי לקריאה בלבד; העלאה/מחיקה מותרת למנהלים בלבד.

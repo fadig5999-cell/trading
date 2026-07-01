@@ -51,7 +51,7 @@ export function AppShell({
         </div>
       )}
 
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 flex items-center justify-between border-b border-chrome-200 bg-white/80 px-4 py-3.5 backdrop-blur-md sm:px-6">
           <div className="flex items-center gap-3">
             <button
@@ -89,7 +89,7 @@ export function AppShell({
           </div>
         </header>
 
-        <main className="flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+        <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
           {children}
         </main>
       </div>

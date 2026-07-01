@@ -73,10 +73,16 @@ export function StockControls({
           הפחת מלאי
         </Button>
         {!compact && (
-          <Button size="md" variant="ghost" onClick={() => setModal("edit")}>
-            <Pencil size={16} />
-            עדכן כמות ידנית
-          </Button>
+          <>
+            <Button size="md" variant="ghost" onClick={() => setModal("sell")} disabled={quantity <= 0}>
+              <ShoppingBag size={16} />
+              מכירה עם פרטי לקוח
+            </Button>
+            <Button size="md" variant="ghost" onClick={() => setModal("edit")}>
+              <Pencil size={16} />
+              עדכן כמות ידנית
+            </Button>
+          </>
         )}
       </div>
 

@@ -2,6 +2,10 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
+  if (process.env.DEMO_MODE === "1") {
+    redirect("/dashboard");
+  }
+
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
 

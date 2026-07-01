@@ -7,7 +7,7 @@ import { MARBLE_CATEGORIES } from "@/lib/constants";
 import type { MarbleType } from "@/lib/types";
 import { getStockStatus } from "@/lib/utils";
 import { LayoutGrid, Search, Table2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function InventoryClient({
   items,
@@ -23,6 +23,10 @@ export function InventoryClient({
   const [location, setLocation] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [view, setView] = useState<"table" | "grid">("table");
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setView("grid");
+  }, []);
 
   const colors = useMemo(
     () => Array.from(new Set(items.map((i) => i.color).filter(Boolean))),

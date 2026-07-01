@@ -3,6 +3,12 @@ import { updateSession } from "@/lib/supabase/proxy";
 import { isSupabaseConfigured } from "@/lib/env";
 
 export async function proxy(request: NextRequest) {
+  // DEMO_MODE renders the UI with local sample data and skips auth entirely.
+  // It is meant ONLY for local design previews without a Supabase project.
+  // Never set DEMO_MODE=1 on a real deployment.
+  if (process.env.DEMO_MODE === "1") {
+    return NextResponse.next();
+  }
   if (!isSupabaseConfigured()) {
     if (request.nextUrl.pathname === "/setup") {
       return NextResponse.next();
