@@ -1,0 +1,11 @@
+{
+  "name": "ניהול מלאי שיש",
+  "short_name": "מלאי שיש",
+  "description": "מערכת ניהול מלאי שיש ואבן טבעית",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#f8f8f8",
+  "theme_color": "#18181b",
+  "dir": "rtl",
+  "lang": "he"
+}
