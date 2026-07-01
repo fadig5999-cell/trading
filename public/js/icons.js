@@ -1,0 +1,41 @@
+// Minimal inline SVG icon set (stroke-based, inherits currentColor).
+const s = (paths, extra = '') =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra}>${paths}</svg>`;
+
+export const icons = {
+  slab: s('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16"/>'),
+  dashboard: s('<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>'),
+  inventory: s('<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>'),
+  sales: s('<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>'),
+  gallery: s('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 16l-5-5-8 8"/>'),
+  reports: s('<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 16v-4M12 16V8M16 16v-6"/>'),
+  settings: s('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.9 7.9 0 000-6l1.5-1.2-2-3.4-1.8.8a7.9 7.9 0 00-5.2-3L11.5 0h-4l-.6 2.2a7.9 7.9 0 00-5.2 3l-1.8-.8-2 3.4L-.9 9" transform="translate(3 3) scale(.75)"/>'),
+  plus: s('<path d="M12 5v14M5 12h14"/>'),
+  minus: s('<path d="M5 12h14"/>'),
+  cart: s('<circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a1.5 1.5 0 001.5 1.2h8.2a1.5 1.5 0 001.5-1.2L21 7H6"/>'),
+  edit: s('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>'),
+  trash: s('<path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M6 6v14a2 2 0 002 2h8a2 2 0 002-2V6"/>'),
+  search: s('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>'),
+  box: s('<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>'),
+  layers: s('<path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5"/>'),
+  alert: s('<path d="M10.3 3.3l-8 14A2 2 0 004 20h16a2 2 0 001.7-2.7l-8-14a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17h.01"/>'),
+  ban: s('<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>'),
+  coins: s('<ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v5c0 1.7 2.7 3 6 3s6-1.3 6-3V7"/><path d="M15 11.5c2.5.4 6 1.5 6 3.5 0 1.7-2.7 3-6 3-1.3 0-2.5-.2-3.5-.5"/>'),
+  calendar: s('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>'),
+  logout: s('<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/>'),
+  menu: s('<path d="M4 6h16M4 12h16M4 18h16"/>'),
+  close: s('<path d="M6 6l12 12M18 6L6 18"/>'),
+  image: s('<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/>'),
+  upload: s('<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/>'),
+  eye: s('<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>'),
+  location: s('<path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/>'),
+  ruler: s('<rect x="2" y="7" width="20" height="10" rx="1.5" transform="rotate(0 12 12)"/><path d="M7 7v3M12 7v4M17 7v3"/>'),
+  palette: s('<path d="M12 3a9 9 0 100 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8H16a5 5 0 005-5c0-3.9-4-6.7-9-6.7z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/>'),
+  user: s('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>'),
+  check: s('<path d="M20 6L9 17l-5-5"/>'),
+  phone: s('<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8.1 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.4c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/>'),
+  tag: s('<path d="M20.6 13.4L13.4 20.6a2 2 0 01-2.8 0l-7-7a2 2 0 010-2.8L10.8 3.6A2 2 0 0112.2 3H19a2 2 0 012 2v6.8a2 2 0 01-.4 1.6z"/><circle cx="16.5" cy="7.5" r="1.2"/>'),
+  info: s('<circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>'),
+  chart: s('<path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="8"/><rect x="12" y="6" width="3" height="12"/><rect x="17" y="13" width="3" height="5"/>'),
+  trophy: s('<path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4z"/><path d="M7 6H4v2a3 3 0 003 3M17 6h3v2a3 3 0 01-3 3"/>')
+};
