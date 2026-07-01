@@ -1,0 +1,32 @@
+# One-click deployment blueprint for Render.com (https://render.com)
+# 1. Push this repo to GitHub.
+# 2. On Render: New > Blueprint > select your repo. Render reads this file.
+# 3. Set ADMIN_PASSWORD (and optionally others) as secrets, then deploy.
+services:
+  - type: web
+    name: marble-inventory
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server/index.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true          # Render generates a strong random secret
+      - key: DB_PATH
+        value: /var/data/marble.db    # store the SQLite DB on the persistent disk
+      - key: UPLOAD_DIR
+        value: /var/data/uploads      # store uploaded images on the persistent disk
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false                   # set this yourself in the Render dashboard
+      - key: BUSINESS_NAME
+        value: אולם תצוגת שיש
+    disk:
+      name: marble-data
+      mountPath: /var/data            # persists the database + uploads across deploys
+      sizeGB: 1
