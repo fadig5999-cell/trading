@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f5f7;
+  --surface: #ffffff;
+  --foreground: #1c1f24;
+  --muted: #6b7280;
+  --border: #e3e5e9;
+
+  --chrome-100: #fafbfc;
+  --chrome-200: #eef0f3;
+  --chrome-300: #dde1e6;
+  --chrome-400: #c3c8d1;
+  --chrome-500: #9aa2af;
+  --chrome-600: #6b7280;
+  --chrome-700: #4b5158;
+  --chrome-800: #2c2f36;
+  --chrome-900: #15171b;
+
+  --accent: #a68a52;
+  --accent-dark: #8a7140;
+  --accent-soft: #f3ecdd;
+
+  --success: #0f9d58;
+  --warning: #b8860b;
+  --danger: #c0392b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  --color-chrome-100: var(--chrome-100);
+  --color-chrome-200: var(--chrome-200);
+  --color-chrome-300: var(--chrome-300);
+  --color-chrome-400: var(--chrome-400);
+  --color-chrome-500: var(--chrome-500);
+  --color-chrome-600: var(--chrome-600);
+  --color-chrome-700: var(--chrome-700);
+  --color-chrome-800: var(--chrome-800);
+  --color-chrome-900: var(--chrome-900);
+
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-rubik);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-rubik), "Segoe UI", Tahoma, sans-serif;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+.luxury-card {
+  background: linear-gradient(180deg, var(--surface) 0%, #fbfbfc 100%);
+  border: 1px solid var(--border);
+  border-radius: 1.1rem;
+  box-shadow:
+    0 1px 2px rgba(16, 18, 22, 0.04),
+    0 8px 24px -8px rgba(16, 18, 22, 0.08);
+}
+
+.chrome-surface {
+  background: linear-gradient(160deg, #ffffff 0%, #f1f2f4 55%, #e6e8eb 100%);
+  border: 1px solid var(--chrome-300);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--chrome-400);
+  border-radius: 999px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out;
+}
