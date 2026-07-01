@@ -1,0 +1,50 @@
+<%- include("partials/header") %>
+<section class="panel form-panel">
+  <div class="panel-head">
+    <h2><%= marble ? "עריכת סוג שיש" : "הוסף סוג שיש" %></h2>
+    <a class="btn btn-muted" href="/inventory">חזרה למלאי</a>
+  </div>
+  <form method="post" action="<%= formAction %>" enctype="multipart/form-data" class="grid two">
+    <label>שם שיש (אנגלית)
+      <input type="text" name="name" required value="<%= marble?.name || '' %>" />
+    </label>
+    <label>שם שיש בעברית
+      <input type="text" name="hebrew_name" required value="<%= marble?.hebrew_name || '' %>" />
+    </label>
+    <label>קטגוריה
+      <input type="text" name="category" required value="<%= marble?.category || '' %>" />
+    </label>
+    <label>צבע
+      <input type="text" name="color" required value="<%= marble?.color || '' %>" />
+    </label>
+    <label>עובי
+      <input type="text" name="thickness" required value="<%= marble?.thickness || '' %>" />
+    </label>
+    <label>גודל
+      <input type="text" name="size" required value="<%= marble?.size || '' %>" />
+    </label>
+    <label>כמות במלאי
+      <input type="number" min="0" name="quantity" required value="<%= marble?.quantity ?? 0 %>" />
+    </label>
+    <label>מיקום באולם/מחסן
+      <input type="text" name="location" required value="<%= marble?.location || '' %>" />
+    </label>
+    <label>מחיר עלות
+      <input type="number" step="0.01" min="0" name="cost_price" value="<%= marble?.cost_price ?? '' %>" />
+    </label>
+    <label>מחיר מכירה
+      <input type="number" step="0.01" min="0" name="selling_price" value="<%= marble?.selling_price ?? '' %>" />
+    </label>
+    <label class="full">תמונה
+      <input type="file" name="image" accept="image/*" />
+      <% if (marble?.image_path) { %>
+        <img class="preview" src="<%= marble.image_path %>" alt="תמונת שיש" />
+      <% } %>
+    </label>
+    <label class="full">הערות
+      <textarea name="notes" rows="4"><%= marble?.notes || '' %></textarea>
+    </label>
+    <button type="submit" class="btn btn-primary full"><%= marble ? "שמור שינויים" : "הוסף סוג שיש" %></button>
+  </form>
+</section>
+<%- include("partials/footer") %>

@@ -1,0 +1,67 @@
+<%- include("partials/header") %>
+<section class="grid stats">
+  <article class="stat-card">
+    <h3>סה״כ סוגי שיש</h3>
+    <strong><%= stats.total_types %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>סה״כ לוחות במלאי</h3>
+    <strong><%= stats.total_slabs %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>פריטים במלאי נמוך</h3>
+    <strong><%= stats.low_stock_items %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>נמכר היום</h3>
+    <strong><%= stats.sold_today %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>נמכר החודש</h3>
+    <strong><%= stats.sold_month %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>שווי מלאי (מכירה)</h3>
+    <strong><%= Number(stats.stock_sale_value || 0).toLocaleString("he-IL") %> <%= currency %></strong>
+  </article>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>עדכוני מלאי אחרונים</h2>
+    <a class="btn btn-primary" href="/inventory">למלאי המלא</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>שם</th>
+          <th>קטגוריה</th>
+          <th>כמות במלאי</th>
+          <th>מיקום</th>
+          <th>סטטוס</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% marbles.forEach((item) => { %>
+          <tr>
+            <td><strong><%= item.hebrew_name %></strong><br /><small><%= item.name %></small></td>
+            <td><%= item.category %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.location %></td>
+            <td>
+              <% if (item.status === "sold_out") { %>
+                <span class="chip sold-out">אזל מהמלאי</span>
+              <% } else if (item.status === "low_stock") { %>
+                <span class="chip low-stock">מלאי נמוך</span>
+              <% } else { %>
+                <span class="chip in-stock">במלאי</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include("partials/footer") %>

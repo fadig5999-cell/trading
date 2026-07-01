@@ -1,0 +1,27 @@
+<%- include("partials/header") %>
+<section class="panel">
+  <h2>הגדרות מערכת</h2>
+  <p>המערכת כוללת תפקידי משתמשים: מנהל וצופה. מנהל יכול להוסיף/לערוך/למחוק/למכור. צופה יכול לצפות בלבד.</p>
+  <h3>פרטי התחברות זמניים</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>תפקיד</th>
+          <th>שם משתמש</th>
+          <th>סיסמה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% credentials.forEach((row) => { %>
+          <tr>
+            <td><%= row.role %></td>
+            <td><%= row.username %></td>
+            <td><%= row.password %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include("partials/footer") %>

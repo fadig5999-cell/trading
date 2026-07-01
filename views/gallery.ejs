@@ -1,0 +1,32 @@
+<%- include("partials/header") %>
+<section class="panel">
+  <div class="panel-head">
+    <h2>גלריית שיש</h2>
+  </div>
+  <div class="gallery-grid">
+    <% items.forEach((item) => { %>
+      <article class="gallery-card">
+        <% if (item.image_path) { %>
+          <img src="<%= item.image_path %>" alt="<%= item.hebrew_name %>" />
+        <% } else { %>
+          <div class="gallery-placeholder">ללא תמונה</div>
+        <% } %>
+        <div class="gallery-body">
+          <h3><%= item.hebrew_name %></h3>
+          <p><%= item.name %></p>
+          <p>כמות זמינה: <strong><%= item.quantity %></strong></p>
+          <p>מחיר: <strong><%= item.selling_price ? Number(item.selling_price).toLocaleString("he-IL") : "—" %> <%= currency %></strong></p>
+          <div class="gallery-actions">
+            <a class="btn btn-muted" href="/inventory">צפה בפרטים</a>
+            <% if (user.role === "admin") { %>
+              <form method="post" action="/inventory/<%= item.id %>/sell-one">
+                <button class="btn danger" type="submit">מכור לוח</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+<%- include("partials/footer") %>

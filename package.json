@@ -1,0 +1,31 @@
+{
+  "name": "marble-showroom-inventory",
+  "version": "1.0.0",
+  "description": "Professional Hebrew RTL inventory and sales web app for marble and stone slab showrooms.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node -e \"console.log('No automated tests configured')\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fadig5999-cell/trading.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fadig5999-cell/trading/issues"
+  },
+  "homepage": "https://github.com/fadig5999-cell/trading#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.11.1",
+    "dayjs": "^1.11.21",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "multer": "^2.2.0"
+  }
+}

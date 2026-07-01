@@ -1,0 +1,26 @@
+<%- include("partials/header") %>
+<section class="auth-wrap">
+  <div class="auth-card">
+    <h2>התחברות למערכת</h2>
+    <p>כניסה מאובטחת לניהול מלאי השיש והאבן.</p>
+    <form method="post" action="/login" class="grid two">
+      <label>
+        שם משתמש
+        <input type="text" name="username" required />
+      </label>
+      <label>
+        סיסמה
+        <input type="password" name="password" required />
+      </label>
+      <button type="submit" class="btn btn-primary full">התחבר</button>
+    </form>
+    <div class="auth-hint">
+      <strong>חשבונות הדגמה:</strong>
+      <ul>
+        <li>מנהל: admin / Admin123!</li>
+        <li>צופה: viewer / Viewer123!</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<%- include("partials/footer") %>

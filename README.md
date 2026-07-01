@@ -1,39 +1,80 @@
-# Interactive Practice Wheel 3D Model
+# ניהול מלאי שיש - Marble Showroom Inventory
 
-This repository contains a dependency-free WebGL 2 viewer and procedural 3D
-reconstruction of the supplied mechanical drawing. The model focuses on the
-visible circular wheel: 18 repeated raised ribs, a rolled outer rim, recessed
-pockets, raised hub, bore, chamfers, and metallic inspection materials.
+אפליקציית Web מלאה לניהול אולם שיש/אבן עם ממשק עברי RTL.
 
-## Run locally
+## תכונות עיקריות
 
-Open `index.html` directly in a modern browser, or serve the folder:
+- התחברות מאובטחת + תפקידי משתמש:
+  - `admin` - ניהול מלאי מלא (הוספה/עריכה/מחיקה/מכירה)
+  - `viewer` - צפייה בלבד
+- לוח בקרה עסקי:
+  - סה״כ סוגי שיש
+  - סה״כ לוחות במלאי
+  - מלאי נמוך
+  - מכירות היום / החודש
+  - שווי מלאי
+- ניהול מלאי מלא:
+  - הוספת סוג שיש חדש
+  - עריכת פריט
+  - מחיקה
+  - העלאת תמונה
+  - הוספת מלאי / הפחתת מלאי / עריכה ידנית
+  - כפתור `מכור לוח` שמפחית אוטומטית ב-1
+- מניעת מלאי שלילי.
+- סטטוסים אוטומטיים:
+  - `אזל מהמלאי` כאשר הכמות 0
+  - `מלאי נמוך` כאשר הכמות קטנה מ-3
+- היסטוריית מכירות עם:
+  - סוג שיש
+  - כמות
+  - תאריך/שעה
+  - מחיר
+  - שם/טלפון/הערות (אופציונלי)
+- חיפוש וסינון מלאי:
+  - שם
+  - צבע
+  - עובי
+  - מיקום
+  - קטגוריה
+  - מלאי נמוך / אזל
+- גלריה פרימיום עם תמונות וכפתור מכירה מהיר.
+- דוחות: הנמכרים ביותר, שווי מלאי, מלאי נמוך, מכירות חודשיות.
+- עיצוב יוקרתי נקי בצבעי לבן/אפור/כסוף + תמיכה מלאה במובייל.
+
+## טכנולוגיה
+
+- Node.js
+- Express
+- EJS (server-side rendering)
+- SQLite (`better-sqlite3`) - בסיס נתונים קבוע
+- Sessions + bcryptjs לאבטחה
+- Multer להעלאת תמונות
+
+## הרצה מקומית
 
 ```bash
-python3 -m http.server 8080
+npm install
+npm run start
 ```
 
-Then visit `http://localhost:8080`.
+פתח בדפדפן:
 
-## Controls
+`http://localhost:3000`
 
-- Drag: rotate the model.
-- Shift-drag or right-drag: pan/move the model.
-- Mouse wheel: zoom.
-- Double-click or **Reset view**: restore the default camera.
-- **Labels**: toggle feature callouts.
-- **Wireframe**: overlay mesh edges for close inspection.
-- **Download OBJ**: export the generated mesh for import into another platform.
+## משתמשי התחברות ראשוניים
 
-## Model notes
+- מנהל: `admin` / `Admin123!`
+- צופה: `viewer` / `Viewer123!`
 
-The drawing screenshot has limited resolution, so the procedural model uses the
-visible dimensions and repeated feature counts as constraints:
+## פרסום (Deployment) מהיר
 
-- Outer diameter: 6.60 in.
-- 18 repeated ribs at 20 degree pitch.
-- 5 degree rib sweep represented as subtle twist.
-- Raised hub, bore, beveled rim, and recessed pockets modeled from the visible
-  section/profile cues.
+ניתן לפרסם ב-Render/Railway/Fly.io:
 
-See `assets/model-spec.json` for the structured parameter summary.
+1. דחוף את הפרויקט ל-GitHub
+2. צור שירות Web חדש מהמאגר
+3. פקודת build: `npm install`
+4. פקודת start: `npm run start`
+5. הגדר משתנה סביבה מומלץ:
+   - `SESSION_SECRET=<long-random-secret>`
+
+> הערה: האפליקציה משתמשת ב-SQLite ולכן הקובץ נשמר על הדיסק של השרת.

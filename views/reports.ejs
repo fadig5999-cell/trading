@@ -1,0 +1,96 @@
+<%- include("partials/header") %>
+<section class="grid stats">
+  <article class="stat-card">
+    <h3>שווי מלאי עלות</h3>
+    <strong><%= Number(report.stockValue.current_stock_cost || 0).toLocaleString("he-IL") %> <%= currency %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>שווי מלאי מכירה</h3>
+    <strong><%= Number(report.stockValue.current_stock_sale || 0).toLocaleString("he-IL") %> <%= currency %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>סה״כ לוחות שנמכרו</h3>
+    <strong><%= report.totals.sold_slabs_total %></strong>
+  </article>
+  <article class="stat-card">
+    <h3>סה״כ הכנסות</h3>
+    <strong><%= Number(report.totals.total_revenue || 0).toLocaleString("he-IL") %> <%= currency %></strong>
+  </article>
+</section>
+
+<section class="panel">
+  <h2>סוגי שיש הנמכרים ביותר</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>שם</th>
+          <th>כמות שנמכרה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% report.topSold.forEach((item) => { %>
+          <tr>
+            <td><%= item.hebrew_name %> <small>(<%= item.name %>)</small></td>
+            <td><%= item.total_sold %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>רשימת מלאי נמוך / אזל</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>שם</th>
+          <th>כמות</th>
+          <th>מיקום</th>
+          <th>סטטוס</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% report.lowStock.forEach((item) => { %>
+          <tr>
+            <td><%= item.hebrew_name %> <small>(<%= item.name %>)</small></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.location %></td>
+            <td>
+              <% if (item.status === "sold_out") { %><span class="chip sold-out">אזל מהמלאי</span><% } %>
+              <% if (item.status === "low_stock") { %><span class="chip low-stock">מלאי נמוך</span><% } %>
+              <% if (item.status === "in_stock") { %><span class="chip in-stock">במלאי</span><% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>מכירות חודשיות</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>חודש</th>
+          <th>כמות לוחות שנמכרו</th>
+          <th>הכנסה חודשית</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% report.monthlySales.forEach((month) => { %>
+          <tr>
+            <td><%= month.month %></td>
+            <td><%= month.sold_slabs %></td>
+            <td><%= Number(month.revenue || 0).toLocaleString("he-IL") %> <%= currency %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include("partials/footer") %>

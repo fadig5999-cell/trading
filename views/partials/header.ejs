@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | ניהול מלאי שיש</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <% if (user) { %>
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-badge">MS</span>
+          <div>
+            <h1>ניהול מלאי שיש</h1>
+            <p>מערכת מקצועית לניהול אולם שיש ואבן</p>
+          </div>
+        </div>
+        <div class="user-actions">
+          <span class="chip role-<%= user.role %>"><%= user.role === "admin" ? "מנהל" : "צופה" %></span>
+          <strong><%= user.full_name %></strong>
+          <form action="/logout" method="post">
+            <button type="submit" class="btn btn-muted">התנתק</button>
+          </form>
+        </div>
+      </header>
+      <nav class="main-nav">
+        <a class="<%= path === '/' ? 'active' : '' %>" href="/">לוח בקרה</a>
+        <a class="<%= path.startsWith('/inventory') ? 'active' : '' %>" href="/inventory">מלאי</a>
+        <a class="<%= path.startsWith('/sales') ? 'active' : '' %>" href="/sales">מכירות</a>
+        <a class="<%= path.startsWith('/gallery') ? 'active' : '' %>" href="/gallery">גלריה</a>
+        <a class="<%= path.startsWith('/reports') ? 'active' : '' %>" href="/reports">דוחות</a>
+        <a class="<%= path.startsWith('/settings') ? 'active' : '' %>" href="/settings">הגדרות</a>
+      </nav>
+    <% } %>
+    <main class="container">
+      <% if (message) { %>
+        <div class="alert success"><%= message %></div>
+      <% } %>
+      <% if (error) { %>
+        <div class="alert error"><%= error %></div>
+      <% } %>

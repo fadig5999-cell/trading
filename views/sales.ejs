@@ -1,0 +1,65 @@
+<%- include("partials/header") %>
+<section class="panel">
+  <div class="panel-head">
+    <h2>היסטוריית מכירות</h2>
+  </div>
+  <% if (user.role === "admin") { %>
+    <form action="/sales/new" method="post" class="grid two">
+      <label>סוג שיש
+        <select name="marble_id" required>
+          <% marbles.forEach((item) => { %>
+            <option value="<%= item.id %>"><%= item.hebrew_name %> (<%= item.quantity %> במלאי)</option>
+          <% }) %>
+        </select>
+      </label>
+      <label>כמות שנמכרה
+        <input type="number" min="1" value="1" name="quantity" required />
+      </label>
+      <label>מחיר ליחידה
+        <input type="number" step="0.01" min="0" name="unit_price" />
+      </label>
+      <label>שם לקוח (אופציונלי)
+        <input type="text" name="customer_name" />
+      </label>
+      <label>טלפון (אופציונלי)
+        <input type="text" name="customer_phone" />
+      </label>
+      <label>הערות (אופציונלי)
+        <input type="text" name="notes" />
+      </label>
+      <button type="submit" class="btn btn-primary full">שמור מכירה</button>
+    </form>
+  <% else { %>
+    <p>למשתמש צופה אין הרשאה להוסיף מכירה.</p>
+  <% } %>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>סוג שיש</th>
+          <th>כמות</th>
+          <th>מחיר</th>
+          <th>לקוח</th>
+          <th>טלפון</th>
+          <th>הערות</th>
+          <th>תאריך ושעה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sales.forEach((sale) => { %>
+          <tr>
+            <td><strong><%= sale.marble_hebrew_name %></strong><br /><small><%= sale.marble_name %></small></td>
+            <td><%= sale.quantity %></td>
+            <td><%= sale.total_price ? Number(sale.total_price).toLocaleString("he-IL") : "0" %> <%= currency %></td>
+            <td><%= sale.customer_name || "—" %></td>
+            <td><%= sale.customer_phone || "—" %></td>
+            <td><%= sale.notes || "—" %></td>
+            <td><%= dayjs(sale.created_at).format("DD/MM/YYYY HH:mm") %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include("partials/footer") %>
